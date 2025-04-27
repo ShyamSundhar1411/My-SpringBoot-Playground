@@ -7,11 +7,11 @@ Each project is an independent server with unique functionality, ranging from si
 
 ## Projects in this Repository
 
-### 1. **Todo API** 📝 (Project: [todowoo](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/todowoo))
+### 1. **Todo API** 📝 (Project: [todowoo](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/todowoo))
    - A simple Todo application to manage tasks with basic CRUD operations.
    - Features include task creation, updating, completion status, and deletion.
 
-### 2. **Books API** 📚 (Project: [bookwiz](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/bookwiz))
+### 2. **Books API** 📚 (Project: [bookwiz](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/bookwiz))
    - An API to manage a book library.
    - Allows adding, updating, deleting, and retrieving book details, including title, author, and genre.
    - Features search functionality based on author, title, or genre.
