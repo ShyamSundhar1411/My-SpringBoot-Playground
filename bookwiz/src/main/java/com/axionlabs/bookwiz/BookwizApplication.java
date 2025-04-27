@@ -10,19 +10,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @OpenAPIDefinition(
 		info = @Info(
-				title = "BookWiz REST API Documentation",
-				description = "REST API Documentation for BookWiz",
-				version = "v1",
+				title = "BookWiz API Documentation",
+				description = "Comprehensive documentation for the BookWiz REST APIs, enabling efficient management of books within the platform.",
+				version = "v1.0",
 				contact = @Contact(
 						name = "Shyam Sundhar",
 						email = "clashwithchiefrpjyt@gmail.com",
 						url = "https://shyamsundhar.vercel.app"
 				),
 				license = @License(
-						name = "MIT"
+						name = "MIT License",
+						url = "https://opensource.org/licenses/MIT"
 				)
 		)
 )
+
 public class BookwizApplication {
 
 	public static void main(String[] args) {
