@@ -12,4 +12,10 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("SELECT b FROM Book b WHERE LOWER(b.bookTitle) = LOWER(:bookTitle) AND b.author = :author")
     Optional<Book> findBookByBookTitleAndAuthor(String bookTitle, String author);
+
+    @Query("SELECT b FROM Book b WHERE " +
+            "LOWER(b.bookTitle) LIKE LOWER(CONCAT('%', :text, '%')) OR " +
+            "LOWER(b.author) LIKE LOWER(CONCAT('%', :text, '%')) OR " +
+            "LOWER(b.publishedBy) LIKE LOWER(CONCAT('%', :text, '%'))")
+    List<Book> searchBooks(String text);
 }

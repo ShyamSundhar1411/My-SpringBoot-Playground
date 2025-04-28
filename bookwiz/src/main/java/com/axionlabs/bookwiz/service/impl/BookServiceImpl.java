@@ -125,6 +125,14 @@ public class BookServiceImpl implements IBookService {
                 book -> BookMapper.mapToBookDto(new BookDto(), book)
         ).toList();
     }
+
+    @Override
+    public List<BookDto> searchBooks(String q) {
+        return bookRepository.searchBooks(q).stream().map(
+                book -> BookMapper.mapToBookDto(new BookDto(), book)
+        ).toList();
+    }
+
     private boolean bookExists(String title, String author) {
         Optional<Book> optionalBook = bookRepository.findBookByBookTitleAndAuthor(title, author);
         return optionalBook.isPresent();

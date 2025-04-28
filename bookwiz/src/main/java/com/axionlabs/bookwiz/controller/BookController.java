@@ -250,5 +250,17 @@ public class BookController {
                         books
                 ));
     }
-
+    @GetMapping("/search")
+    public ResponseEntity<BookResponseDto<List<BookDto>>> searchBooks(@RequestParam String q) {
+        List<BookDto> books = iBookService.searchBooks(q);
+        return ResponseEntity.status(
+                HttpStatus.OK
+        ).body(
+                new BookResponseDto<List<BookDto>>(
+                        HttpStatus.OK,
+                        "Books retrieved successfully",
+                        books
+                )
+        );
+    }
 }
