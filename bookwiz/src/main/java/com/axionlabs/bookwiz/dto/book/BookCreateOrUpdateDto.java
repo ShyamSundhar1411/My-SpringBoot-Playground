@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class BookCreateDto {
+public class BookCreateOrUpdateDto {
 
     @NotEmpty(message = "Book Title cannot be null or empty")
     @Size(min = 5, message = "The length of the title of the book should be atleast 5")

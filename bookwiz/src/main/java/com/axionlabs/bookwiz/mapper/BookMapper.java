@@ -1,6 +1,6 @@
 package com.axionlabs.bookwiz.mapper;
 
-import com.axionlabs.bookwiz.dto.book.BookCreateDto;
+import com.axionlabs.bookwiz.dto.book.BookCreateOrUpdateDto;
 import com.axionlabs.bookwiz.dto.book.BookDto;
 import com.axionlabs.bookwiz.entity.Book;
 
@@ -26,7 +26,7 @@ public class BookMapper {
         return bookEntity;
     }
 
-    public static Book mapToBookEntity(BookCreateDto bookDto, Book bookEntity){
+    public static Book mapToBookEntity(BookCreateOrUpdateDto bookDto, Book bookEntity){
         bookEntity.setBookTitle(bookDto.getBookTitle());
         bookEntity.setBookDescription(bookDto.getBookDescription());
         bookEntity.setAuthor(bookDto.getAuthor());

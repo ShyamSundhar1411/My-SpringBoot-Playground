@@ -1,6 +1,6 @@
 package com.axionlabs.bookwiz.controller;
 
-import com.axionlabs.bookwiz.dto.book.BookCreateDto;
+import com.axionlabs.bookwiz.dto.book.BookCreateOrUpdateDto;
 import com.axionlabs.bookwiz.dto.book.BookDto;
 import com.axionlabs.bookwiz.dto.book.BookResponseDto;
 import com.axionlabs.bookwiz.dto.ErrorResponseDto;
@@ -96,7 +96,7 @@ public class BookController {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
             )
     })
-    public ResponseEntity<BookResponseDto<BookDto>> createBook(@Valid @RequestBody BookCreateDto bookDto){
+    public ResponseEntity<BookResponseDto<BookDto>> createBook(@Valid @RequestBody BookCreateOrUpdateDto bookDto){
         BookDto book = iBookService.createBook(bookDto);
         return ResponseEntity.status(
                 HttpStatus.CREATED
@@ -107,5 +107,19 @@ public class BookController {
                         book
                 )
         );
+    }
+    @PutMapping("/books/{id}")
+    public ResponseEntity<BookResponseDto<BookDto>> updateBook(@PathVariable Long id,@Valid @RequestBody BookCreateOrUpdateDto bookDto){
+        BookDto book = iBookService.updateBook(id, bookDto);
+        return ResponseEntity.status(
+                HttpStatus.OK
+        ).body(
+                new BookResponseDto<BookDto>(
+                        HttpStatus.OK,
+                        "Book Updated Successfully",
+                        book
+                )
+        );
+
     }
 }

@@ -1,6 +1,6 @@
 package com.axionlabs.bookwiz.service.impl;
 
-import com.axionlabs.bookwiz.dto.book.BookCreateDto;
+import com.axionlabs.bookwiz.dto.book.BookCreateOrUpdateDto;
 import com.axionlabs.bookwiz.dto.book.BookDto;
 import com.axionlabs.bookwiz.entity.Book;
 import com.axionlabs.bookwiz.exception.BookAlreadyExistsException;
@@ -8,6 +8,7 @@ import com.axionlabs.bookwiz.exception.ResourceNotFoundException;
 import com.axionlabs.bookwiz.mapper.BookMapper;
 import com.axionlabs.bookwiz.repository.BookRepository;
 import com.axionlabs.bookwiz.service.IBookService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,7 @@ public class BookServiceImpl implements IBookService {
      * @return BookDto - Created Book
      */
     @Override
-    public BookDto createBook(BookCreateDto bookData){
+    public BookDto createBook(BookCreateOrUpdateDto bookData){
         Optional<Book> optionalBook = bookRepository.findBookByBookTitleAndAuthor(bookData.getBookTitle(), bookData.getAuthor());
         if(optionalBook.isPresent()){
             throw new BookAlreadyExistsException(
@@ -73,7 +74,7 @@ public class BookServiceImpl implements IBookService {
      * @return BookDto - Updated Book
      */
     @Override
-    public BookDto updateBook(Long bookId, BookDto bookData) {
+    public BookDto updateBook(Long bookId, @Valid BookCreateOrUpdateDto bookData) {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new ResourceNotFoundException(
                         "Book","BookId",bookId.toString()
