@@ -11,6 +11,7 @@ import com.axionlabs.bookwiz.service.IBookService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -99,6 +100,34 @@ public class BookServiceImpl implements IBookService {
         );
         bookRepository.deleteById(bookId);
         return true;
+    }
+
+    /**
+     * @param bookData - List of books to be created
+     * @return list of created books
+     */
+    @Transactional
+    @Override
+    public List<BookDto> bulkCreateBooks(List<BookCreateOrUpdateDto> bookData) {
+        List<BookCreateOrUpdateDto> booksToCreate = bookData.stream()
+                .filter(bookDto -> !bookExists(bookDto.getBookTitle(), bookDto.getAuthor()))
+                .toList();
+
+
+        if (booksToCreate.isEmpty()) {
+            return List.of();
+        }
+        List<Book> books = booksToCreate.stream().map(
+                bookDto -> BookMapper.mapToBookEntity(bookDto, new Book())
+        ).toList();
+        List<Book> savedBook = bookRepository.saveAll(books);
+        return savedBook.stream().map(
+                book -> BookMapper.mapToBookDto(new BookDto(), book)
+        ).toList();
+    }
+    private boolean bookExists(String title, String author) {
+        Optional<Book> optionalBook = bookRepository.findBookByBookTitleAndAuthor(title, author);
+        return optionalBook.isPresent();
     }
 
 }

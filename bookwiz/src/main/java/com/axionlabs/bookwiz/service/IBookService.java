@@ -12,4 +12,5 @@ public interface IBookService {
     BookDto createBook(BookCreateOrUpdateDto bookData);
     BookDto updateBook(Long bookId, @Valid BookCreateOrUpdateDto bookData);
     boolean deleteBook(Long bookId);
+    List<BookDto> bulkCreateBooks(List<BookCreateOrUpdateDto> bookData);
 }
