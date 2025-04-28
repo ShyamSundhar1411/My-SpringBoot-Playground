@@ -1,5 +1,6 @@
 package com.axionlabs.bookwiz.service.impl;
 
+import com.axionlabs.bookwiz.dto.BookCreateDto;
 import com.axionlabs.bookwiz.dto.BookDto;
 import com.axionlabs.bookwiz.entity.Book;
 import com.axionlabs.bookwiz.exception.BookAlreadyExistsException;
@@ -53,7 +54,7 @@ public class BookServiceImpl implements IBookService {
      * @return BookDto - Created Book
      */
     @Override
-    public BookDto createBook(BookDto bookData){
+    public BookDto createBook(BookCreateDto bookData){
         Optional<Book> optionalBook = bookRepository.findBookByBookTitleAndAuthor(bookData.getBookTitle(), bookData.getAuthor());
         if(optionalBook.isPresent()){
             throw new BookAlreadyExistsException(

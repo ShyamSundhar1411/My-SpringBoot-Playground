@@ -1,6 +1,8 @@
 package com.axionlabs.bookwiz.controller;
 
+import com.axionlabs.bookwiz.dto.BookCreateDto;
 import com.axionlabs.bookwiz.dto.BookDto;
+import com.axionlabs.bookwiz.dto.BookResponseDto;
 import com.axionlabs.bookwiz.dto.ErrorResponseDto;
 import com.axionlabs.bookwiz.entity.Book;
 import com.axionlabs.bookwiz.service.IBookService;
@@ -10,13 +12,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class BookController {
         this.iBookService = iBookService;
     }
     @GetMapping("/books")
+
     @Operation(
             summary = "Retrieve all books",
             description = "Fetches a list of all books available in the BookWiz platform."
@@ -65,7 +68,8 @@ public class BookController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Book Not found"
+                            description = "Book Not Found",
+                            content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
                     )
             }
     )
@@ -73,6 +77,38 @@ public class BookController {
         BookDto book = iBookService.fetchBookByBookId(id);
         return ResponseEntity.ok(book);
     }
-
-
+    @PostMapping("/books/create")
+    @Operation(
+            summary = "Create a new book",
+            description = "Creates a new book entry in the BookWiz platform based on the provided book details."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Book created successfully.",
+                    content = @Content(schema = @Schema(implementation = BookResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid input data provided.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    public ResponseEntity<BookResponseDto<BookDto>> createBook(@Valid @RequestBody BookCreateDto bookDto){
+        BookDto book = iBookService.createBook(bookDto);
+        return ResponseEntity.status(
+                HttpStatus.CREATED
+        ).body(
+                new BookResponseDto<BookDto>(
+                        HttpStatus.CREATED,
+                        "Book Created Successfully",
+                        book
+                )
+        );
+    }
 }
