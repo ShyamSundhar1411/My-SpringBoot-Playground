@@ -2,6 +2,7 @@ package com.axionlabs.bookwiz.controller;
 
 import com.axionlabs.bookwiz.dto.BookDto;
 import com.axionlabs.bookwiz.dto.ErrorResponseDto;
+import com.axionlabs.bookwiz.entity.Book;
 import com.axionlabs.bookwiz.service.IBookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,5 +52,27 @@ public class BookController {
         List<BookDto> books = iBookService.fetchAllBooks();
         return ResponseEntity.ok(books);
     }
+    @GetMapping("/books/{id}")
+    @Operation(
+            summary = "Retrieve book by bookId",
+            description = "Fetches a book available based on the book id"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully retrieved the book by bookId"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Book Not found"
+                    )
+            }
+    )
+    public ResponseEntity<BookDto> fetchBookByBookId(@PathVariable Long id){
+        BookDto book = iBookService.fetchBookByBookId(id);
+        return ResponseEntity.ok(book);
+    }
+
 
 }
