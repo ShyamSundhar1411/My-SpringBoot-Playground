@@ -251,6 +251,27 @@ public class BookController {
                 ));
     }
     @GetMapping("/search")
+    @Operation(
+            summary = "Search Books",
+            description = "Searches for books in the BookWiz platform by matching the provided text against the book title, author, or publisher."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully retrieved matching books.",
+                    content = @Content(schema = @Schema(implementation = BookResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid search query provided.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
     public ResponseEntity<BookResponseDto<List<BookDto>>> searchBooks(@RequestParam String q) {
         List<BookDto> books = iBookService.searchBooks(q);
         return ResponseEntity.status(
