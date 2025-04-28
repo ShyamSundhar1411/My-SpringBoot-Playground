@@ -1,4 +1,4 @@
-package com.axionlabs.bookwiz.dto;
+package com.axionlabs.bookwiz.dto.book;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

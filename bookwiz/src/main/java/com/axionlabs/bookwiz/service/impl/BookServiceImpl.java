@@ -1,7 +1,7 @@
 package com.axionlabs.bookwiz.service.impl;
 
-import com.axionlabs.bookwiz.dto.BookCreateDto;
-import com.axionlabs.bookwiz.dto.BookDto;
+import com.axionlabs.bookwiz.dto.book.BookCreateDto;
+import com.axionlabs.bookwiz.dto.book.BookDto;
 import com.axionlabs.bookwiz.entity.Book;
 import com.axionlabs.bookwiz.exception.BookAlreadyExistsException;
 import com.axionlabs.bookwiz.exception.ResourceNotFoundException;
@@ -65,4 +65,39 @@ public class BookServiceImpl implements IBookService {
         Book book = bookRepository.save(BookMapper.mapToBookEntity(bookData,new Book()));
         return BookMapper.mapToBookDto(new BookDto(), book);
     }
+
+    /**
+     *
+     * @param bookId - ID of the Book
+     * @param bookData - New Details of the book
+     * @return BookDto - Updated Book
+     */
+    @Override
+    public BookDto updateBook(Long bookId, BookDto bookData) {
+        Book book = bookRepository.findById(bookId).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        "Book","BookId",bookId.toString()
+                )
+        );
+        BookMapper.mapToBookEntity(bookData,book);
+        bookRepository.save(book);
+        return BookMapper.mapToBookDto(new BookDto(),book);
+    }
+
+    /**
+     *
+     * @param bookId - ID of the book to be deleted
+     * @return boolean indicating if delete has been performed successfully or not
+     */
+    @Override
+    public boolean deleteBook(Long bookId) {
+        bookRepository.findById(bookId).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        "Book","BookId",bookId.toString()
+                )
+        );
+        bookRepository.deleteById(bookId);
+        return true;
+    }
+
 }

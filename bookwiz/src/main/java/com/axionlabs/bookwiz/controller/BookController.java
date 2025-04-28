@@ -1,10 +1,9 @@
 package com.axionlabs.bookwiz.controller;
 
-import com.axionlabs.bookwiz.dto.BookCreateDto;
-import com.axionlabs.bookwiz.dto.BookDto;
-import com.axionlabs.bookwiz.dto.BookResponseDto;
+import com.axionlabs.bookwiz.dto.book.BookCreateDto;
+import com.axionlabs.bookwiz.dto.book.BookDto;
+import com.axionlabs.bookwiz.dto.book.BookResponseDto;
 import com.axionlabs.bookwiz.dto.ErrorResponseDto;
-import com.axionlabs.bookwiz.entity.Book;
 import com.axionlabs.bookwiz.service.IBookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,10 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.axionlabs.bookwiz.mapper;
 
-import com.axionlabs.bookwiz.dto.BookCreateDto;
-import com.axionlabs.bookwiz.dto.BookDto;
+import com.axionlabs.bookwiz.dto.book.BookCreateDto;
+import com.axionlabs.bookwiz.dto.book.BookDto;
 import com.axionlabs.bookwiz.entity.Book;
 
 public class BookMapper {
