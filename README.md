@@ -17,8 +17,8 @@ Each project is an independent server with unique functionality, ranging from si
    - Features search functionality based on author, title, or genre.
 
 ### 3. **User Authentication System** 🔐 (Project: [accessa](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/accessa))  
-A modular and secure user authentication system built with Spring Boot.  
-Supports user registration, login, JWT-based authentication, role-based access, and more.
+   -  A modular and secure user authentication system built with Spring Boot.  
+   -  Supports user registration, login, JWT-based authentication, role-based access, and more.
 ---
 
 ## Technologies Used
