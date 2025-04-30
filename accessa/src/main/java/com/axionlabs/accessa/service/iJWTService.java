@@ -2,7 +2,6 @@ package com.axionlabs.accessa.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JWTService {
+public class iJWTService {
     private static final String SECRET_KEY = "1FC5142271728779143A39ACCB651";
     public String extractUserName(String jwtToken) {
         return extractClaim(jwtToken, Claims::getSubject);
