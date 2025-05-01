@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class iUserService implements UserDetailsService {
+public class IUserService implements UserDetailsService {
     private UserRepository userRepository;
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -29,6 +29,11 @@ public class iUserService implements UserDetailsService {
                 () -> new UsernameNotFoundException(
                         "User not found"
                 )
+        );
+    }
+    public UserDetailsService userDetails(){
+        return username -> userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
         );
     }
 }

@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class iJWTService {
+public class IJWTService {
     private static final String SECRET_KEY = "1FC5142271728779143A39ACCB651";
     public String extractUserName(String jwtToken) {
         return extractClaim(jwtToken, Claims::getSubject);
