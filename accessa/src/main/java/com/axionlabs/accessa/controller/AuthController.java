@@ -1,6 +1,6 @@
 package com.axionlabs.accessa.controller;
 
-import com.axionlabs.accessa.dto.TokenizedUserDto;
+import com.axionlabs.accessa.dto.user.TokenizedUserDto;
 import com.axionlabs.accessa.dto.user.request.LoginRequestDto;
 import com.axionlabs.accessa.dto.user.request.RegisterRequestDto;
 import com.axionlabs.accessa.dto.user.response.UserResponseDto;

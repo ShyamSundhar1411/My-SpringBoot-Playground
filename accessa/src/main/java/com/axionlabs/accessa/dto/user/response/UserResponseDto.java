@@ -1,9 +1,7 @@
 package com.axionlabs.accessa.dto.user.response;
 
-import com.axionlabs.accessa.dto.TokenizedUserDto;
+import com.axionlabs.accessa.dto.user.TokenizedUserDto;
 import com.axionlabs.accessa.dto.user.BaseResponseDto;
-import com.axionlabs.accessa.dto.user.UserDto;
-import lombok.Data;
 import org.springframework.http.HttpStatusCode;
 
 
