@@ -23,7 +23,4 @@ public class UserDto {
     @NotEmpty(message = "Email cannot be empty")
     @Email(message = "Invalid email format")
     private  String email;
-
-
-
 }
