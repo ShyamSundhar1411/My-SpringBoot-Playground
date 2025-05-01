@@ -47,6 +47,7 @@ public class UserMapper {
     ){
         userDto.setUserName(user.getUsername());
         userDto.setUserId(user.getUserId());
+        userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setAccessToken(token);

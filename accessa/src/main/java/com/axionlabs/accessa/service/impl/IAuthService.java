@@ -1,22 +1,53 @@
 package com.axionlabs.accessa.service.impl;
 
 import com.axionlabs.accessa.dto.user.TokenizedUserDto;
+import com.axionlabs.accessa.dto.user.request.LoginRequestDto;
 import com.axionlabs.accessa.dto.user.request.RegisterRequestDto;
 import com.axionlabs.accessa.entity.User;
 import com.axionlabs.accessa.mapper.UserMapper;
 import com.axionlabs.accessa.repository.UserRepository;
 import com.axionlabs.accessa.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class IAuthService implements AuthService {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private IJWTService ijwtService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final IJWTService ijwtService;
+    private final AuthenticationManager authenticationManager;
+
+    public IAuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, IJWTService ijwtService, AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.ijwtService = ijwtService;
+        this.authenticationManager = authenticationManager;
+    }
+
+
     public TokenizedUserDto registerUser(RegisterRequestDto userData){
         User user = UserMapper.mapToUser(userData, new User(), passwordEncoder);
         userRepository.save(user);
+        var jwtToken = ijwtService.generateJwtToken(user);
+        return UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken);
+    }
+
+    @Override
+    public TokenizedUserDto loginUser(LoginRequestDto userData) {
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken( userData.getUserName(),
+                userData.getPassword()
+            )
+        );
+        var user = userRepository.findByUserName(
+                userData.getUserName()
+        ).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
         var jwtToken = ijwtService.generateJwtToken(user);
         return UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken);
     }

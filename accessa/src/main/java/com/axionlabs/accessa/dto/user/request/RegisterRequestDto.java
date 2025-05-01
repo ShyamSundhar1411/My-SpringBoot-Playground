@@ -13,7 +13,6 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(exclude = {"confirmPassword"})
 public class RegisterRequestDto {
-    private UUID userId;
     @NotEmpty(message = "Username cannot be empty")
     @Size(min = 4, message = "The length of the username should be atleast 4")
     private String userName;

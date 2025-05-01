@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
+@Table(name = "_users")
 @Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
 public class User implements UserDetails {
     @Id
