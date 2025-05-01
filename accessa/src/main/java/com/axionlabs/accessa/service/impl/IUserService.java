@@ -1,4 +1,4 @@
-package com.axionlabs.accessa.service;
+package com.axionlabs.accessa.service.impl;
 
 import com.axionlabs.accessa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,13 @@
 package com.axionlabs.accessa.controller;
 
+import com.axionlabs.accessa.dto.TokenizedUserDto;
 import com.axionlabs.accessa.dto.user.request.LoginRequestDto;
 import com.axionlabs.accessa.dto.user.request.RegisterRequestDto;
 import com.axionlabs.accessa.dto.user.response.UserResponseDto;
+import com.axionlabs.accessa.service.impl.IAuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +22,27 @@ import org.springframework.web.bind.annotation.RestController;
 )
 
 public class AuthController {
+    private final IAuthService iAuthService;
+
+    public AuthController(IAuthService iAuthService) {
+        this.iAuthService = iAuthService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<UserResponseDto> register(
             @Valid @RequestBody RegisterRequestDto request
     ){
-        return null;
+        TokenizedUserDto userDetails = iAuthService.registerUser(request);
+        return ResponseEntity.status(
+                HttpStatus.OK
+        ).body(
+                new UserResponseDto(
+                        HttpStatus.CREATED,
+                        "User registered successfully",
+                        userDetails
+
+                )
+        );
     }
 
     @PostMapping("/login")

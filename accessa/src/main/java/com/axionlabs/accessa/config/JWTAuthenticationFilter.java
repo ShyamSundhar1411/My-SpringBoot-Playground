@@ -1,7 +1,7 @@
 package com.axionlabs.accessa.config;
 
-import com.axionlabs.accessa.service.iJWTService;
-import com.axionlabs.accessa.service.iUserService;
+import com.axionlabs.accessa.service.impl.IJWTService;
+import com.axionlabs.accessa.service.impl.IUserService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,7 +12,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,8 +21,8 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
-    private final iJWTService iJwtService;
-    private final iUserService iUserDetailService;
+    private final IJWTService iJwtService;
+    private final IUserService iUserDetailService;
 
     /**
      * Same contract as for {@code doFilter}, but guaranteed to be

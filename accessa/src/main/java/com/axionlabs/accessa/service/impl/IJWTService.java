@@ -1,4 +1,4 @@
-package com.axionlabs.accessa.service;
+package com.axionlabs.accessa.service.impl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
