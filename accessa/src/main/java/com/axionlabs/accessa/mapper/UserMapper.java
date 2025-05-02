@@ -8,6 +8,8 @@ import com.axionlabs.accessa.entity.User;
 import io.jsonwebtoken.security.Password;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Map;
+
 public class UserMapper {
     public static UserDto mapToUserDto(
             UserDto userDto, User user
@@ -45,15 +47,15 @@ public class UserMapper {
         return user;
     }
     public static TokenizedUserDto mapToTokenizedUserDto(
-            TokenizedUserDto userDto, User user, String token
+            TokenizedUserDto userDto, User user, Map<String, String> tokenMap
     ){
         userDto.setUserName(user.getUsername());
         userDto.setUserId(user.getUserId());
         userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setAccessToken(token);
-        userDto.setRefreshToken(token);
+        userDto.setAccessToken(tokenMap.get("accessToken"));
+        userDto.setRefreshToken(tokenMap.get("refreshToken"));
         return userDto;
     }
 }
