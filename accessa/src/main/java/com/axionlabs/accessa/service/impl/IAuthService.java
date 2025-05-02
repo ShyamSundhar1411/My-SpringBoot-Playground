@@ -4,6 +4,7 @@ import com.axionlabs.accessa.dto.user.TokenizedUserDto;
 import com.axionlabs.accessa.dto.user.request.LoginRequestDto;
 import com.axionlabs.accessa.dto.user.request.RegisterRequestDto;
 import com.axionlabs.accessa.entity.User;
+import com.axionlabs.accessa.exception.UserAlreadyExistsException;
 import com.axionlabs.accessa.mapper.UserMapper;
 import com.axionlabs.accessa.repository.UserRepository;
 import com.axionlabs.accessa.service.AuthService;
@@ -13,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class IAuthService implements AuthService {
@@ -30,6 +33,9 @@ public class IAuthService implements AuthService {
 
 
     public TokenizedUserDto registerUser(RegisterRequestDto userData){
+        if(checkUserExists(userData.getUserName(),userData.getEmail())){
+            throw new UserAlreadyExistsException("A user with this username or email already exists.");
+        }
         User user = UserMapper.mapToUser(userData, new User(), passwordEncoder);
         userRepository.save(user);
         var jwtToken = ijwtService.generateJwtToken(user);
@@ -50,5 +56,10 @@ public class IAuthService implements AuthService {
         );
         var jwtToken = ijwtService.generateJwtToken(user);
         return UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken);
+    }
+
+    @Override
+    public boolean checkUserExists(String userName, String email) {
+        return userRepository.findByUserNameOrEmail(userName,email).isPresent();
     }
 }

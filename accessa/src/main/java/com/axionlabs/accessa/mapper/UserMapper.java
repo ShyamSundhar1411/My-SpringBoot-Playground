@@ -3,6 +3,7 @@ package com.axionlabs.accessa.mapper;
 import com.axionlabs.accessa.dto.user.TokenizedUserDto;
 import com.axionlabs.accessa.dto.user.UserDto;
 import com.axionlabs.accessa.dto.user.request.RegisterRequestDto;
+import com.axionlabs.accessa.entity.Role;
 import com.axionlabs.accessa.entity.User;
 import io.jsonwebtoken.security.Password;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +41,7 @@ public class UserMapper {
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRole(Role.USER);
         return user;
     }
     public static TokenizedUserDto mapToTokenizedUserDto(

@@ -34,7 +34,7 @@ public class AuthController {
     ){
         TokenizedUserDto userDetails = iAuthService.registerUser(request);
         return ResponseEntity.status(
-                HttpStatus.OK
+                HttpStatus.CREATED
         ).body(
                 new UserResponseDto(
                         HttpStatus.CREATED,
@@ -47,6 +47,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<UserResponseDto> login(@Valid @RequestBody LoginRequestDto request){
-        return null;
+        TokenizedUserDto userDetails = iAuthService.loginUser(request);
+        return ResponseEntity.status(
+                HttpStatus.CREATED
+        ).body(
+                new UserResponseDto(
+                        HttpStatus.OK,
+                        "User Logged in successfully",
+                        userDetails
+                )
+        );
     }
 }
