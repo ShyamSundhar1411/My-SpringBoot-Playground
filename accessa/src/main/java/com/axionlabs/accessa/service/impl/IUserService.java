@@ -2,15 +2,19 @@ package com.axionlabs.accessa.service.impl;
 
 import com.axionlabs.accessa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class IUserService implements UserDetailsService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    @Autowired
+    public IUserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
     /**
      * Locates the user based on the username. In the actual implementation, the search
      * may possibly be case sensitive, or case insensitive depending on how the

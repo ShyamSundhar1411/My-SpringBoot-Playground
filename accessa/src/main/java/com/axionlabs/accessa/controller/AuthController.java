@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 @Tag(
         name = "Authentication APIs - Accessa",
-        description = "Handles user authentication, registration, and session management for the Accesa application."
+        description = "Handles user authentication, registration, and session management for the Accessa application."
 )
 
 public class AuthController {
     private final IAuthService iAuthService;
-
+    @Autowired
     public AuthController(IAuthService iAuthService) {
         this.iAuthService = iAuthService;
     }
@@ -102,7 +103,7 @@ public class AuthController {
     public ResponseEntity<UserResponseDto> login(@Valid @RequestBody LoginRequestDto request){
         TokenizedUserDto userDetails = iAuthService.loginUser(request);
         return ResponseEntity.status(
-                HttpStatus.CREATED
+                HttpStatus.OK
         ).body(
                 new UserResponseDto(
                         HttpStatus.OK,

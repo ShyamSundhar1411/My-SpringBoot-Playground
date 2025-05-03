@@ -20,6 +20,14 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
      */
     @Override
     public boolean isValid(RegisterRequestDto dto, ConstraintValidatorContext context) {
-        return dto.getPassword().equals(dto.getConfirmPassword());
+        boolean isValid =  dto.getPassword().equals(dto.getConfirmPassword());
+        if (!isValid) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("Passwords do not match")
+                    .addPropertyNode("confirmPassword")
+                    .addConstraintViolation();
+        }
+
+        return isValid;
     }
 }

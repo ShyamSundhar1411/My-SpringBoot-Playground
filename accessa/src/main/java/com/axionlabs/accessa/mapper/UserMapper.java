@@ -1,5 +1,6 @@
 package com.axionlabs.accessa.mapper;
 
+import com.axionlabs.accessa.dto.token.TokenDto;
 import com.axionlabs.accessa.dto.user.TokenizedUserDto;
 import com.axionlabs.accessa.dto.user.UserDto;
 import com.axionlabs.accessa.dto.user.request.RegisterRequestDto;
@@ -47,15 +48,15 @@ public class UserMapper {
         return user;
     }
     public static TokenizedUserDto mapToTokenizedUserDto(
-            TokenizedUserDto userDto, User user, Map<String, String> tokenMap
+            TokenizedUserDto userDto, User user, TokenDto tokens
     ){
         userDto.setUserName(user.getUsername());
         userDto.setUserId(user.getUserId());
         userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setAccessToken(tokenMap.get("accessToken"));
-        userDto.setRefreshToken(tokenMap.get("refreshToken"));
+        userDto.setAccessToken(tokens.getAccessToken());
+        userDto.setRefreshToken(tokens.getRefreshToken());
         return userDto;
     }
 }

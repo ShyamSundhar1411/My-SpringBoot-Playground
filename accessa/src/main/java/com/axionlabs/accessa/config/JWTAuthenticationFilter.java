@@ -46,10 +46,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         jwtToken = authHeader.substring(7);
-        userName = iJwtService.extractUserName(jwtToken);
+        userName = iJwtService.extractUserName(jwtToken, true);
         if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.iUserDetailService.loadUserByUsername(userName);
-            if(iJwtService.isTokenValid(jwtToken,userDetails)){
+            if(iJwtService.isTokenValid(jwtToken,userDetails, true)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                   userDetails,
                   null,
