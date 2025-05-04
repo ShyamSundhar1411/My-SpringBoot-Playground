@@ -1,15 +1,23 @@
 package com.axionlabs.accessa.service.impl;
 
+import com.axionlabs.accessa.dto.user.UserDto;
+import com.axionlabs.accessa.entity.User;
+import com.axionlabs.accessa.mapper.UserMapper;
 import com.axionlabs.accessa.repository.UserRepository;
+import com.axionlabs.accessa.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class IUserService implements UserDetailsService {
+public class IUserService implements UserService {
     private final UserRepository userRepository;
     @Autowired
     public IUserService(UserRepository userRepository){
@@ -34,6 +42,21 @@ public class IUserService implements UserDetailsService {
                         "User not found"
                 )
         );
+    }
+
+    public UserDto fetchUserDetails(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated()){
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+        String username = authentication.getName();
+        User user =  userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException(
+                        "User not found"
+                )
+        );
+
+        return UserMapper.mapToUserDto(new UserDto(), user);
     }
     public UserDetailsService userDetails(){
         return username -> userRepository.findByUserName(username).orElseThrow(
