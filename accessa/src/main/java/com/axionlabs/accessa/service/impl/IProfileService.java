@@ -23,4 +23,5 @@ public class IProfileService implements ProfileService {
     public Optional<Profile> fetchProfileFromUser(User user) {
         return profileRepository.findByUser(user);
     }
+
 }

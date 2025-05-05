@@ -1,7 +1,10 @@
 package com.axionlabs.accessa.service.impl;
 
+import com.axionlabs.accessa.dto.profile.ProfileDto;
 import com.axionlabs.accessa.dto.user.UserDto;
+import com.axionlabs.accessa.entity.Profile;
 import com.axionlabs.accessa.entity.User;
+import com.axionlabs.accessa.mapper.ProfileMapper;
 import com.axionlabs.accessa.mapper.UserMapper;
 import com.axionlabs.accessa.repository.UserRepository;
 import com.axionlabs.accessa.service.UserService;
@@ -19,9 +22,11 @@ import java.util.Optional;
 @Service
 public class IUserService implements UserService {
     private final UserRepository userRepository;
+    private final IProfileService profileService;
     @Autowired
-    public IUserService(UserRepository userRepository){
+    public IUserService(UserRepository userRepository, IProfileService profileService){
         this.userRepository = userRepository;
+        this.profileService = profileService;
     }
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -55,8 +60,8 @@ public class IUserService implements UserService {
                         "User not found"
                 )
         );
-
-        return UserMapper.mapToUserDto(new UserDto(), user);
+        Optional<Profile> profile = profileService.fetchProfileFromUser(user);
+        return profile.map(value -> UserMapper.mapToUserDto(new UserDto(), user, ProfileMapper.mapToProfileDto(new ProfileDto(), value))).orElseGet(() -> UserMapper.mapToUserDto(new UserDto(), user));
     }
     public UserDetailsService userDetails(){
         return username -> userRepository.findByUserName(username).orElseThrow(

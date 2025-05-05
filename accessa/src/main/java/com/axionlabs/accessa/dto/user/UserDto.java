@@ -1,5 +1,7 @@
 package com.axionlabs.accessa.dto.user;
 
+import com.axionlabs.accessa.dto.profile.ProfileDto;
+import com.axionlabs.accessa.entity.Profile;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -24,4 +26,5 @@ public class UserDto {
     @Email(message = "Invalid email format")
     private  String email;
 
+    private ProfileDto userProfile;
 }
