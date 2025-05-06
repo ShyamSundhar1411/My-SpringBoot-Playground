@@ -69,13 +69,14 @@ public class IAuthService implements AuthService {
                 userData.getPassword()
             )
         );
-        var user = userRepository.findByUserName(
+        User user = userRepository.findByUserName(
                 userData.getUserName()
         ).orElseThrow(
                 () -> new UsernameNotFoundException("User not found")
         );
+        Optional<Profile> profile = profileRepository.findByUser(user);
         var jwtToken = ijwtService.generateJwtToken(user);
-        return UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken);
+        return profile.map(value -> UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken, ProfileMapper.mapToProfileDto(new ProfileDto(), value))).orElseGet(() -> UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken));
     }
 
     @Override
