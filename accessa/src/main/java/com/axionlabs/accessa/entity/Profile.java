@@ -2,17 +2,14 @@ package com.axionlabs.accessa.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(name = "_profiles")
-@Getter @Setter @ToString @AllArgsConstructor
+@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
 public class Profile extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

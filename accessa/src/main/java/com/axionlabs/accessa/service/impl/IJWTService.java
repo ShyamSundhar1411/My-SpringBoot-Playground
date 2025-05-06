@@ -97,6 +97,7 @@ public class IJWTService {
                 .compact();
     }
     private Claims extractAllClaims(String jwtToken, boolean isAccess){
+
         return Jwts.parser()
                 .verifyWith(isAccess ? getAccessSignInKey() : getRefreshSignInKey())
                 .build()

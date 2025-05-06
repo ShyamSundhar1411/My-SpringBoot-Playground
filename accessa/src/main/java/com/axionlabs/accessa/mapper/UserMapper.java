@@ -60,6 +60,20 @@ public class UserMapper {
         userDto.setRefreshToken(tokens.getRefreshToken());
         return userDto;
     }
+
+    public static TokenizedUserDto mapToTokenizedUserDto(
+            TokenizedUserDto userDto, User user, TokenDto tokens, ProfileDto profileData
+    ){
+        userDto.setUserName(user.getUsername());
+        userDto.setUserId(user.getUserId());
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setUserProfile(profileData);
+        userDto.setAccessToken(tokens.getAccessToken());
+        userDto.setRefreshToken(tokens.getRefreshToken());
+        return userDto;
+    }
     public static UserDto mapToUserDto(
             UserDto userDto, User user, ProfileDto profileDto
     ){

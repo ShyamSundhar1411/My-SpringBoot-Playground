@@ -1,8 +1,10 @@
 package com.axionlabs.accessa.service.impl;
 
+import com.axionlabs.accessa.dto.profile.ProfileDto;
 import com.axionlabs.accessa.entity.Profile;
 import com.axionlabs.accessa.entity.User;
 import com.axionlabs.accessa.exception.ResourceNotFoundException;
+import com.axionlabs.accessa.mapper.ProfileMapper;
 import com.axionlabs.accessa.repository.ProfileRepository;
 import com.axionlabs.accessa.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +25,6 @@ public class IProfileService implements ProfileService {
     public Optional<Profile> fetchProfileFromUser(User user) {
         return profileRepository.findByUser(user);
     }
+
 
 }

@@ -15,6 +15,7 @@ import com.axionlabs.accessa.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,9 +52,14 @@ public class IAuthService implements AuthService {
         User user = UserMapper.mapToUser(userData, new User(), passwordEncoder);
         userRepository.save(user);
 
-
+        Profile profile = ProfileMapper.mapToProfile(
+                new ProfileDto(),new Profile()
+        );
+        profile.setUser(user);
+        profileRepository.save(profile);
         var jwtToken = ijwtService.generateJwtToken(user);
-        return UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken);
+
+        return UserMapper.mapToTokenizedUserDto(new TokenizedUserDto(), user, jwtToken, ProfileMapper.mapToProfileDto(new ProfileDto(),profile));
     }
 
     @Override
