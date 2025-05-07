@@ -1,6 +1,7 @@
 package com.axionlabs.accessa.controller;
 
 import com.axionlabs.accessa.dto.ErrorResponseDto;
+import com.axionlabs.accessa.dto.user.BaseResponseDto;
 import com.axionlabs.accessa.dto.user.UserDto;
 import com.axionlabs.accessa.dto.user.response.UserProfileResponseDto;
 import com.axionlabs.accessa.dto.user.response.UserResponseDto;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +34,7 @@ public class UserController {
     public UserController(IUserService iUserService){
         this.iUserService = iUserService;
     }
-    @GetMapping("profile")
+    @GetMapping("me")
     @Operation(
             summary = "Get User Profile",
             description = "Fetches the currently authenticated user's profile using the JWT Bearer token.",
@@ -70,6 +72,55 @@ public class UserController {
                         "User Profile fetched successfully",
                         userData
 
+                )
+        );
+    }
+    @DeleteMapping("me")
+    @Operation(
+            summary = "Delete User Profile",
+            description = "Deletes the currently authenticated user's profile using the JWT Bearer token.",
+            security = { @SecurityRequirement(name = "bearerAuth") }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "User profile deleted successfully.",
+                    content = @Content(schema = @Schema(implementation = BaseResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized. User is not authenticated.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "User profile deleted unsuccessfully",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    public ResponseEntity<BaseResponseDto> deleteUserProfile(){
+        boolean isDeleted = iUserService.deleteUser();
+        if(isDeleted){
+            return ResponseEntity.status(
+                    HttpStatus.NO_CONTENT
+            ).body(
+                    new BaseResponseDto(
+                            HttpStatus.NO_CONTENT,
+                            "User profile Deleted Successfully"
+                    )
+            );
+        }
+        return ResponseEntity.status(
+                HttpStatus.BAD_REQUEST
+        ).body(
+                new BaseResponseDto(
+                        HttpStatus.NO_CONTENT,
+                        "User profile Deleted Unsuccessfully"
                 )
         );
     }

@@ -24,6 +24,9 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Profile profile;
+
 
     /**
      * Returns the authorities granted to the user. Cannot return <code>null</code>.

@@ -34,7 +34,6 @@ public class BookController {
         this.iBookService = iBookService;
     }
     @GetMapping("/books")
-
     @Operation(
             summary = "Retrieve all books",
             description = "Fetches a list of all books available in the BookWiz platform."

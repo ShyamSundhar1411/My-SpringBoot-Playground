@@ -68,4 +68,17 @@ public class IUserService implements UserService {
                 () -> new UsernameNotFoundException("User not found")
         );
     }
+    public boolean deleteUser(){
+        boolean isDeleted = false;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated()){
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+        String username = authentication.getName();
+        User user = userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
+        userRepository.delete(user);
+        return true;
+    }
 }
