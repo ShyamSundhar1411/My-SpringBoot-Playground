@@ -1,10 +1,10 @@
 package com.axionlabs.accessa.controller;
 
 import com.axionlabs.accessa.dto.ErrorResponseDto;
+import com.axionlabs.accessa.dto.profile.request.ProfileUpdateRequestDto;
 import com.axionlabs.accessa.dto.user.BaseResponseDto;
 import com.axionlabs.accessa.dto.user.UserDto;
 import com.axionlabs.accessa.dto.user.response.UserProfileResponseDto;
-import com.axionlabs.accessa.dto.user.response.UserResponseDto;
 import com.axionlabs.accessa.service.impl.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,13 +13,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(
@@ -124,4 +122,47 @@ public class UserController {
                 )
         );
     }
+
+    @PutMapping("me")
+    @Operation(
+            summary = "Update User Profile",
+            description = "Updates the currently authenticated user's profile using the JWT Bearer token.",
+            security = {@SecurityRequirement(name = "bearerAuth")}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User profile updated successfully.",
+                    content = @Content(schema = @Schema(implementation = BaseResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized. User is not authenticated.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "User profile updated unsuccessfully",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    public ResponseEntity<UserProfileResponseDto> updateUserProfile(@Valid @RequestBody ProfileUpdateRequestDto profileData) {
+        UserDto userData = iUserService.updatedUserDetails(profileData);
+
+        return ResponseEntity.status(
+                HttpStatus.OK
+        ).body(
+                new UserProfileResponseDto(
+                        HttpStatus.OK,
+                        "User profile updated Successfully",
+                        userData
+                )
+        );
+    }
+
 }

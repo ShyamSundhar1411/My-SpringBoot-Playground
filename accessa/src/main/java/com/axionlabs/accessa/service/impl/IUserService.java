@@ -1,14 +1,15 @@
 package com.axionlabs.accessa.service.impl;
 
 import com.axionlabs.accessa.dto.profile.ProfileDto;
+import com.axionlabs.accessa.dto.profile.request.ProfileUpdateRequestDto;
 import com.axionlabs.accessa.dto.user.UserDto;
 import com.axionlabs.accessa.entity.Profile;
 import com.axionlabs.accessa.entity.User;
 import com.axionlabs.accessa.mapper.ProfileMapper;
 import com.axionlabs.accessa.mapper.UserMapper;
+import com.axionlabs.accessa.repository.ProfileRepository;
 import com.axionlabs.accessa.repository.UserRepository;
 import com.axionlabs.accessa.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,10 +23,12 @@ import java.util.Optional;
 @Service
 public class IUserService implements UserService {
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
     private final IProfileService profileService;
     @Autowired
-    public IUserService(UserRepository userRepository, IProfileService profileService){
+    public IUserService(UserRepository userRepository, IProfileService profileService, ProfileRepository profileRepository){
         this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
         this.profileService = profileService;
     }
     /**
@@ -69,7 +72,7 @@ public class IUserService implements UserService {
         );
     }
     public boolean deleteUser(){
-        boolean isDeleted = false;
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null || !authentication.isAuthenticated()){
             throw new UsernameNotFoundException("User not authenticated");
@@ -80,5 +83,26 @@ public class IUserService implements UserService {
         );
         userRepository.delete(user);
         return true;
+    }
+
+    @Override
+    public UserDto updatedUserDetails(ProfileUpdateRequestDto profileData) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated()){
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+        String username = authentication.getName();
+        User user = userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
+
+        Profile profile = profileService.fetchProfileFromUser(user).orElseThrow(
+                () -> new UsernameNotFoundException("User profile not found")
+        );
+        UserMapper.mapToUser(profileData,user);
+        userRepository.save(user);
+        ProfileMapper.mapToProfile(profileData,profile);
+        profileRepository.save(profile);
+        return UserMapper.mapToUserDto(new UserDto(), user, ProfileMapper.mapToProfileDto(new ProfileDto(), profile));
     }
 }
