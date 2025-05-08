@@ -92,7 +92,6 @@ public class UserMapper {
         user.setEmail(profileData.getEmail());
         user.setFirstName(profileData.getFirstName());
         user.setLastName(profileData.getLastName());
-        user.setUserName(profileData.getUserName());
         return user;
     }
 }

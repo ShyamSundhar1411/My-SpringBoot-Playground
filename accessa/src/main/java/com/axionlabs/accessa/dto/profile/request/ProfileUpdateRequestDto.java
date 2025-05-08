@@ -10,11 +10,10 @@ import org.hibernate.validator.constraints.URL;
 import java.time.LocalDate;
 @Data
 public class ProfileUpdateRequestDto {
-    @Pattern(regexp =  "/^(\\+\\d{1,3}[- ]?)?\\d{10}$/", message = "Invalid mobile number format")
+    @Pattern(regexp =  "^(\\+\\d{1,3}[- ]?)?\\d{10}$", message = "Invalid mobile number format")
     private String mobileNumber;
     @URL
     private String profilePicture;
-    @NotEmpty(message = "Date of Birth cannot be empty")
     private LocalDate dateOfBirth;
     @NotEmpty(message = "About cannot be empty")
     private String about;
