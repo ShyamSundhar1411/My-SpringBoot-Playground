@@ -49,12 +49,6 @@ Once running, navigate to:
 http://localhost:8080/swagger-ui/index.html
 ```
 
----
-
-## 👨‍💻 Author
-
-**Shyam Sundhar**  
-[GitHub](https://github.com/ShyamSundhar1411) • [LinkedIn](https://linkedin.com/in/shyamsundhar2435)
 
 ---
 
