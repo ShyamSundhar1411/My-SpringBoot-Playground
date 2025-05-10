@@ -19,6 +19,10 @@ Each project is an independent server with unique functionality, ranging from si
 ### 3. **User Authentication System** 🔐 (Project: [accessa](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/accessa))  
    -  A modular and secure user authentication system built with Spring Boot.  
    -  Supports user registration, login, JWT-based authentication, role-based access, and more.
+   
+### 4. **File Storage System with AWS** ☁️🗄️ (Project: [arkive](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/arkive))
+   - A secure file storage system integrated with AWS S3 for file upload, download, and management.
+   - Features include user authentication, file metadata management, and support for secure file operations (upload, download, and delete).
 ---
 
 ## Technologies Used
