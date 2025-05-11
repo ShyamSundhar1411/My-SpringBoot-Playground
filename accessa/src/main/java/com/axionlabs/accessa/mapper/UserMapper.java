@@ -8,10 +8,7 @@ import com.axionlabs.accessa.dto.user.UserDto;
 import com.axionlabs.accessa.dto.user.request.RegisterRequestDto;
 import com.axionlabs.accessa.entity.Role;
 import com.axionlabs.accessa.entity.User;
-import io.jsonwebtoken.security.Password;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Map;
 
 public class UserMapper {
     public static UserDto mapToUserDto(
@@ -86,12 +83,11 @@ public class UserMapper {
         userDto.setUserProfile(profileDto);
         return userDto;
     }
-    public static User mapToUser(
+    public static void mapToUser(
             ProfileUpdateRequestDto profileData, User user
     ){
         user.setEmail(profileData.getEmail());
         user.setFirstName(profileData.getFirstName());
         user.setLastName(profileData.getLastName());
-        return user;
     }
 }

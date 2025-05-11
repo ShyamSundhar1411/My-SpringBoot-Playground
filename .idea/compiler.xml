@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bookwiz" />
+        <module name="arkive" />
         <module name="accessa" />
       </profile>
       <profile name="Annotation profile for todowoo" enabled="true">
