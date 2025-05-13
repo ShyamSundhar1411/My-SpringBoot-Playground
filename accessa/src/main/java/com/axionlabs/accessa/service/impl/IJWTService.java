@@ -2,6 +2,7 @@ package com.axionlabs.accessa.service.impl;
 
 import com.axionlabs.accessa.dto.token.TokenDto;
 import com.axionlabs.accessa.dto.token.request.TokenRequestDto;
+import com.axionlabs.accessa.service.JWTService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -17,7 +18,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class IJWTService {
+public class IJWTService implements JWTService {
     private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 7;
     private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 15;
     private static final String ACCESS_SECRET_KEY = "F2eFeBST6J3UJZZuGgsHQV3Q0SwZvHgMBZPE0TIV1hQ=";
