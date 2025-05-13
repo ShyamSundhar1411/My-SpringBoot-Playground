@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "_users")
+@Table(name = "arkive_users")
 @Setter @Getter @AllArgsConstructor @NoArgsConstructor
 public class User implements UserDetails {
     @Id
@@ -27,9 +27,6 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Profile profile;
-
 
     /**
      * Returns the authorities granted to the user. Cannot return <code>null</code>.
