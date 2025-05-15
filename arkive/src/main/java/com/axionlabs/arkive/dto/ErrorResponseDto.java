@@ -4,17 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ErrorResponseDto {
     private String apiPath;
     private HttpStatusCode errorCode;
     private String errorMessage;
-    private String errorTime;
+    private LocalDateTime errorTime;
     public String toJson(){
         try{
             ObjectMapper objectMapper = new ObjectMapper();

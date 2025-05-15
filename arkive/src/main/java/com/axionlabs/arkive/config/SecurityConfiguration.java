@@ -1,4 +1,4 @@
-package com.axionlabs.accessa.config;
+package com.axionlabs.arkive.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-    private final JWTAuthenticationFilter jwtAuthFilter;
+    private final JWTAuthenticatIonFilter jwtAuthenticatIonFilter;
     private final AuthenticationProvider authenticationProvider;
-
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(
@@ -30,23 +28,21 @@ public class SecurityConfiguration {
                                         "/swagger-resources/**",
                                         "/swagger-ui.html",
                                         "/webjars/**",
-                                        "/api/v1/token/**"
+                                        "/api/v1/token/**",
+                                "/actuator/**"
+
                                 ).permitAll()
                                 .anyRequest().authenticated()
-
-                ).sessionManagement(
-                        session -> session.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS
-                        )
+                        ).sessionManagement(
+                                session -> session.sessionCreationPolicy(
+                                        SessionCreationPolicy.STATELESS
+                                )
                 ).authenticationProvider(
                         authenticationProvider
-                )
-                .addFilterBefore(
-                        jwtAuthFilter, UsernamePasswordAuthenticationFilter.class
-                )
-        ;
-
-
-        return httpSecurity.build();
+                ).addFilterBefore(
+                        jwtAuthenticatIonFilter, UsernamePasswordAuthenticationFilter.class
+                );
+                return httpSecurity.build();
     }
+
 }
