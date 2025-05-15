@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: arkive
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/playgrounddb
+    username: postgres
+    password: Natsu1411
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    user:
+      name: user
+      password: admin1234
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  show-actuator: true
+  use-management-port: false

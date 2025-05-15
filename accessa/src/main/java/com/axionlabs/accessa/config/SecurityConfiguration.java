@@ -45,8 +45,6 @@ public class SecurityConfiguration {
                         jwtAuthFilter, UsernamePasswordAuthenticationFilter.class
                 )
         ;
-
-
         return httpSecurity.build();
     }
 }

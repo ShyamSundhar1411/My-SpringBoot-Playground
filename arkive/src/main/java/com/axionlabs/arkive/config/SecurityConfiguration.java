@@ -29,7 +29,8 @@ public class SecurityConfiguration {
                                         "/swagger-ui.html",
                                         "/webjars/**",
                                         "/api/v1/token/**",
-                                "/actuator/**"
+                                        "/actuator/**",
+                                        "/open/**"
 
                                 ).permitAll()
                                 .anyRequest().authenticated()

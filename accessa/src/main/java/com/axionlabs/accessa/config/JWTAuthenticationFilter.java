@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -36,8 +35,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
      * <p>Provides HttpServletRequest and HttpServletResponse arguments instead of the
      * default ServletRequest and ServletResponse ones.
      *
-     * @param request - HttpRequest
-     * @param response - HttpResponse
+     * @param request     - HttpRequest
+     * @param response    - HttpResponse
      * @param filterChain - FilterChain
      */
     @Override
@@ -46,8 +45,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwtToken;
         final String userName;
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request,response);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
             return;
         }
         jwtToken = authHeader.substring(7);
@@ -71,7 +70,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        }catch (SignatureException e){
+        } catch (SignatureException e) {
             String path = request.getRequestURI().substring(request.getContextPath().length());
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(
                     path,
