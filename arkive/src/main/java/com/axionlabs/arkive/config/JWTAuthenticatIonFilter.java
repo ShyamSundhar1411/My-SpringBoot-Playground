@@ -12,21 +12,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-
-@Configuration
+@Component
+@RequiredArgsConstructor
 public class JWTAuthenticatIonFilter extends OncePerRequestFilter {
-    private IJWTService ijwtService;
-    private IUserService iUserService;
+    private final IJWTService ijwtService;
+    private final IUserService iUserService;
     /**
      * Same contract as for {@code doFilter}, but guaranteed to be
      * just invoked once per request within a single request thread.
