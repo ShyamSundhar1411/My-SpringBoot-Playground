@@ -3,6 +3,7 @@ package com.axionlabs.arkive.service.impl;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.axionlabs.arkive.config.properties.AWSConfigProperties;
 import com.axionlabs.arkive.dto.file.FileDto;
 import com.axionlabs.arkive.entity.File;
 import com.axionlabs.arkive.mapper.FileMapper;
@@ -21,14 +22,14 @@ import java.util.UUID;
 public class IFileService implements FileService {
     private final FileRepository fileRepository;
     private final AmazonS3 amazonS3;
-    private final String s3BucketName;
+    private final AWSConfigProperties awsConfigProperties;
     private final IURLService iurlService;
     private final FileMapper fileMapper;
     @Autowired
-    public IFileService(FileRepository fileRepository, AmazonS3 amazonS3, String s3BucketName, IURLService iurlService, FileMapper fileMapper) {
+    public IFileService(FileRepository fileRepository, AmazonS3 amazonS3, AWSConfigProperties awsConfigProperties, IURLService iurlService, FileMapper fileMapper) {
         this.fileRepository = fileRepository;
         this.amazonS3 = amazonS3;
-        this.s3BucketName = s3BucketName;
+        this.awsConfigProperties = awsConfigProperties;
         this.iurlService = iurlService;
         this.fileMapper = fileMapper;
     }
@@ -41,7 +42,7 @@ public class IFileService implements FileService {
             metadata.setContentLength(file.getSize());
             metadata.setContentType(file.getContentType());
 
-            PutObjectRequest request = new PutObjectRequest(s3BucketName,fileName,file.getInputStream(),metadata);
+            PutObjectRequest request = new PutObjectRequest(awsConfigProperties.getBucketName(),fileName,file.getInputStream(),metadata);
             amazonS3.putObject(request);
             String presignedUrl = iurlService.generatePreSignedAccessUrl(fileName, 60);
             FileDto fileDto = new FileDto();

@@ -1,9 +1,11 @@
 package com.axionlabs.arkive.service.impl;
 
+import com.axionlabs.arkive.config.properties.JWTConfigProperties;
 import com.axionlabs.arkive.dto.token.TokenDto;
 import com.axionlabs.arkive.dto.token.request.TokenRequestDto;
 import com.axionlabs.arkive.service.JWTService;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.function.Function;
 
 @Service
 public class IJWTService implements JWTService {
-    private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 7;
-    private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 15;
-    private static final String ACCESS_SECRET_KEY = "F2eFeBST6J3UJZZuGgsHQV3Q0SwZvHgMBZPE0TIV1hQ=";
-    private static final String REFRESH_SECRET_KEY = "9w2v/1YYHBiRUp0YXN6SNGJNkG1FxgTQnbb9ixeww9M=";
+    private final JWTConfigProperties jwtConfigProperties;
+
+    @Autowired
+    public IJWTService(JWTConfigProperties jwtConfigProperties){
+        this.jwtConfigProperties = jwtConfigProperties;
+    }
 
     @Override
     public String extractUserName(String jwtToken, boolean isAccess) {
