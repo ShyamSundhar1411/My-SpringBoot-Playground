@@ -7,29 +7,29 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.axionlabs.arkive.config.properties.AWSConfigProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Repository;
 
 @Configuration
+@Repository
 public class AWSConfiguration {
-    @Value("${aws.config.access-key:}")
-    private String accessKey;
-    @Value("${aws.config.secret-access-key}")
-    private String secretKey;
-    @Value("${aws.config.bucket-name}")
-    private String bucketName;
+    private final AWSConfigProperties awsConfig;
+    @Autowired
+    public AWSConfiguration(AWSConfigProperties awsConfig) {
+        this.awsConfig = awsConfig;
+    }
+
     @Bean
     public AmazonS3 initializeS3(){
-        BasicAWSCredentials credentials = new BasicAWSCredentials(this.accessKey,this.secretKey);
+        BasicAWSCredentials credentials = new BasicAWSCredentials(awsConfig.getAccessKey(),awsConfig.getSecretAccessKey());
         return AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.AF_SOUTH_1)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
     }
 
-    @Bean
-    public String s3BucketName(){
-        return this.bucketName;
-    }
 }

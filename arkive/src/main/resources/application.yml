@@ -16,6 +16,11 @@ spring:
     user:
       name: ${SPRING_SECURITY_USER_NAME}
       password: ${SPRING_SECURITY_USER_PASSWORD}
+  token:
+    access-secret-key: ${JWT_ACCESS_SECRET_KEY}
+    access-secret-key-expiration: ${JWT_ACCESS_SECRET_EXPIRATION}
+    refresh-secret-key: ${JWT_REFRESH_SECRET_KEY}
+    refresh-secret-key-expiration: ${JWT_REFRESH_SECRET_EXPIRATION}
 
 management:
   endpoints:
@@ -35,3 +40,4 @@ aws:
     secret-access-key: ${AWS_SECRET_ACCESS_KEY}
     bucket-name: ${AWS_BUCKET_NAME}
     pre-signed-expiry: ${AWS_PRESIGNED_URL_EXPIRATION_IN_MINUTES}
+
