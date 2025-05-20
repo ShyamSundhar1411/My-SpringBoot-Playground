@@ -33,3 +33,5 @@ aws:
   config:
     access-key: ${AWS_ACCESS_KEY}
     secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+    bucket-name: ${AWS_BUCKET_NAME}
+    pre-signed-expiry: ${AWS_PRESIGNED_URL_EXPIRATION_IN_MINUTES}

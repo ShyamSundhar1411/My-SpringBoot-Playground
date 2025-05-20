@@ -7,6 +7,10 @@ import org.hibernate.validator.constraints.URL;
 import java.util.UUID;
 
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
 public class FileDto {
     private UUID fileId;
 
@@ -16,6 +20,7 @@ public class FileDto {
     @URL
     @NotEmpty(message = "File URL cannot be empty")
     private String fileUrl;
+
 
 
 }
