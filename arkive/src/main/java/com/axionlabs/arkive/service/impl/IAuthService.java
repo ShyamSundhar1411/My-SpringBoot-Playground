@@ -1,16 +1,45 @@
 package com.axionlabs.arkive.service.impl;
 
+import com.amazonaws.services.memorydb.model.UserAlreadyExistsException;
 import com.axionlabs.arkive.dto.user.TokenizedUserDto;
 import com.axionlabs.arkive.dto.user.request.LoginRequestDto;
 import com.axionlabs.arkive.dto.user.request.RegisterRequestDto;
+import com.axionlabs.arkive.entity.User;
+import com.axionlabs.arkive.mapper.UserMapper;
+import com.axionlabs.arkive.repository.UserRepository;
 import com.axionlabs.arkive.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class IAuthService implements AuthService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final IJWTService ijwtService;
+    private final AuthenticationManager authenticationManager;
+    private final UserMapper userMapper;
+    @Autowired
+    public IAuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, IJWTService ijwtService, AuthenticationManager authenticationManager,UserMapper userMapper){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.ijwtService = ijwtService;
+        this.authenticationManager = authenticationManager;
+        this.userMapper = userMapper;
+    }
     @Override
     public TokenizedUserDto registerUser(RegisterRequestDto userData) {
-        return null;
+        if(checkUserExists(userData.getUserName(),userData.getEmail())){
+            throw new UserAlreadyExistsException("A user with this username or email already exists.");
+
+        }
+        User user = userMapper.fromRegisterDto(userData);
+        userRepository.save(user);
+        var jwtToken = ijwtService.generateJwtToken(user);
+        return userMapper.toUserDto(user,jwtToken);
+
+
     }
 
     @Override
@@ -20,6 +49,6 @@ public class IAuthService implements AuthService {
 
     @Override
     public boolean checkUserExists(String userName, String email) {
-        return false;
+        return userRepository.findByUserNameOrEmail(userName,email).isPresent();
     }
 }

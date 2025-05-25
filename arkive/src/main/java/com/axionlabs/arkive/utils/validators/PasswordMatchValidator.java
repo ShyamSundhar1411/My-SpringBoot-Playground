@@ -1,4 +1,4 @@
-package com.axionlabs.arkive.util.validators;
+package com.axionlabs.arkive.utils.validators;
 
 import com.axionlabs.arkive.dto.user.request.RegisterRequestDto;
 import jakarta.validation.ConstraintValidator;

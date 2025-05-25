@@ -1,7 +1,7 @@
-package com.axionlabs.arkive.util.validators;
+package com.axionlabs.arkive.utils.validators;
 
 
-import com.axionlabs.accessa.utils.validators.PasswordMatchValidator;
+import com.axionlabs.arkive.utils.validators.PasswordMatchValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

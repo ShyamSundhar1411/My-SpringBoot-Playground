@@ -1,6 +1,6 @@
 package com.axionlabs.arkive.dto.user.request;
 
-import com.axionlabs.accessa.utils.validators.PasswordMatches;
+import com.axionlabs.arkive.utils.validators.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
