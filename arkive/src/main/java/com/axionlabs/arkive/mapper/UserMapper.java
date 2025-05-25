@@ -13,8 +13,17 @@ public interface UserMapper {
     UserDto toUserDto(User user);
     User fromUserDto(UserDto userDto);
     User fromRegisterDto(RegisterRequestDto registerRequestDto);
-    @Mapping(source = "tokenDto.accessToken", target = "accessToken")
-    @Mapping(source = "tokenDto.refreshToken", target = "refreshToken")
-    TokenizedUserDto toUserDto(User user, TokenDto tokenDto);
+
+    default TokenizedUserDto toUserDto(User user, TokenDto tokenDto){
+        TokenizedUserDto dto = new TokenizedUserDto();
+        dto.setUserName(user.getUsername());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setUserId(user.getUserId());
+        dto.setAccessToken(tokenDto.getAccessToken());
+        dto.setRefreshToken(tokenDto.getRefreshToken());
+        dto.setEmail(user.getEmail());
+        return dto;
+    }
 
 }

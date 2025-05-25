@@ -1,5 +1,6 @@
 package com.axionlabs.arkive.config.properties;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Component;
 public class JWTConfigProperties {
     private String accessSecretKey;
     private String refreshSecretKey;
-    private Long accessSecretExpiration;
-    private Long refreshSecretExpiration;
+    private Long accessSecretKeyExpiration;
+    private Long refreshSecretKeyExpiration;
 }
