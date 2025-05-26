@@ -20,6 +20,5 @@ public class FileDto {
     @NotEmpty(message = "File URL cannot be empty")
     private String fileUrl;
 
-
-
+    private FileMetaDataDto fileMetaDataDto;
 }

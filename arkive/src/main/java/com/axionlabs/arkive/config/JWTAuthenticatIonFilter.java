@@ -1,6 +1,6 @@
 package com.axionlabs.arkive.config;
 
-import com.amazonaws.services.elasticmapreduce.model.UsernamePassword;
+
 import com.axionlabs.arkive.dto.ErrorResponseDto;
 import com.axionlabs.arkive.service.impl.IJWTService;
 import com.axionlabs.arkive.service.impl.IUserService;

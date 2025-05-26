@@ -69,7 +69,15 @@ public class IJWTService implements JWTService {
     }
     @Override
     public TokenDto generateJwtTokenFromRefreshToken(TokenRequestDto tokenRequest) {
-        return null;
+        String refreshToken = tokenRequest.getRefreshToken();
+        if(isTokenExpired(refreshToken,false)){
+            String username = extractUserName(refreshToken,false);
+            UserDetails userDetails = iUserService.loadUserByUsername(username);
+            if(isTokenValid(refreshToken,userDetails,false)){
+                return generateJwtToken(userDetails);
+            }
+        }
+        throw new RuntimeException("Invalid or expired token");
     }
 
     @Override

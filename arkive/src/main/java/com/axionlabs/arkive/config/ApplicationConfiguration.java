@@ -1,6 +1,5 @@
 package com.axionlabs.arkive.config;
 
-import com.amazonaws.services.docdbelastic.model.Auth;
 import com.axionlabs.arkive.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
