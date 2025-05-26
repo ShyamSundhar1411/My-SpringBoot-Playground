@@ -27,7 +27,7 @@ public class AWSConfiguration {
     @Bean
     public S3Client initializeS3() {
         AwsCredentials awsCredentials = AwsBasicCredentials.create(awsConfig.getAccessKey(), awsConfig.getSecretAccessKey());
-        return S3Client.builder().region(Region.AF_SOUTH_1
+        return S3Client.builder().region(Region.AP_SOUTH_1
         ).credentialsProvider(
                 StaticCredentialsProvider.create(awsCredentials)
         ).build();
@@ -37,7 +37,7 @@ public class AWSConfiguration {
         AwsCredentials awsCredentials = AwsBasicCredentials.create(awsConfig.getAccessKey(),awsConfig.getSecretAccessKey());
         return S3Presigner.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-                .region(Region.AF_SOUTH_1)
+                .region(Region.AP_SOUTH_1)
                 .build();
     }
 

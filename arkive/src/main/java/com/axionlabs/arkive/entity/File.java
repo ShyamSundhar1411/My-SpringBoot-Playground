@@ -13,10 +13,10 @@ public class File extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID fileId;
 
-    @Column(name = "file_name")
+    @Column(name = "file_name",length = 2048)
     private String fileName;
 
-    @Column(name = "file_url")
+    @Column(name = "file_url",length = 2048)
     private String fileUrl;
 
     @ManyToOne
