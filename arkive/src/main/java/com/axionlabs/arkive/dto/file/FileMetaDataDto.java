@@ -1,6 +1,7 @@
 package com.axionlabs.arkive.dto.file;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.UUID;
@@ -12,7 +13,7 @@ public class FileMetaDataDto {
     @NotEmpty(message = "Content Type cannot be empty")
     private String contentType;
 
-    @NotEmpty(message = "Size cannot be empty")
+    @NotNull(message = "Size cannot be null")
     private Long sizeInBytes;
 
     @NotEmpty(message = "Checksum cannot be empty")
@@ -23,5 +24,4 @@ public class FileMetaDataDto {
 
     @NotEmpty(message = "Encryption Algorithm cannot be empty")
     private String encryptionAlgorithm;
-
 }

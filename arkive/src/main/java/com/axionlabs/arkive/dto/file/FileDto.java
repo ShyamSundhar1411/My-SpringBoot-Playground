@@ -1,5 +1,6 @@
 package com.axionlabs.arkive.dto.file;
 
+import com.axionlabs.arkive.entity.FileMetaData;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -20,5 +21,5 @@ public class FileDto {
     @NotEmpty(message = "File URL cannot be empty")
     private String fileUrl;
 
-    private FileMetaDataDto fileMetaDataDto;
+    private FileMetaDataDto fileMetaData;
 }
