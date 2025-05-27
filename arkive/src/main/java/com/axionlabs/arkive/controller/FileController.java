@@ -3,6 +3,7 @@ package com.axionlabs.arkive.controller;
 import com.axionlabs.arkive.dto.ErrorResponseDto;
 import com.axionlabs.arkive.dto.file.FileDto;
 import com.axionlabs.arkive.dto.file.request.FileUploadRequestDto;
+import com.axionlabs.arkive.dto.file.response.FileListResponseDto;
 import com.axionlabs.arkive.dto.file.response.FileResponseDto;
 import com.axionlabs.arkive.dto.user.response.UserResponseDto;
 import com.axionlabs.arkive.service.impl.IFileService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/file")
@@ -46,7 +48,7 @@ public class FileController {
             @ApiResponse(
                     responseCode = "201",
                     description = "File Uploaded Successfully",
-                    content = @Content(schema = @Schema(implementation = FileDto.class))
+                    content = @Content(schema = @Schema(implementation = FileResponseDto.class))
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -77,6 +79,43 @@ public class FileController {
                 )
         );
     }
+    @Operation(
+            summary = "Fetch All Files",
+            description = "Fetches all files of the currently authenticated user",
+            security = { @SecurityRequirement(name="bearerAuth")}
+
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Files Fetched Successfully",
+                    content = @Content(schema = @Schema(implementation = FileListResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized access (invalid credentials).",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    @GetMapping(value = "/files/")
+    public ResponseEntity<FileListResponseDto> getAllFiles(){
+        List<FileDto> filesData = iFileService.fetchAllFiles();
+        return ResponseEntity.status(
+                HttpStatus.OK
+        ).body(
+                new FileListResponseDto(
+                        HttpStatus.OK,
+                        "Files Fetched Successfully",
+                        filesData
+                )
+        );
+    }
+
 
 
 }

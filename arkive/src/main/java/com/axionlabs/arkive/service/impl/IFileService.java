@@ -15,7 +15,6 @@ import com.axionlabs.arkive.repository.FileMetaDataRepository;
 import com.axionlabs.arkive.repository.FileRepository;
 import com.axionlabs.arkive.repository.UserRepository;
 import com.axionlabs.arkive.service.FileService;
-import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +28,10 @@ import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.net.URL;
+
+import java.nio.file.Files;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -99,6 +101,24 @@ public class IFileService implements FileService {
         return fileMapper.fromFileAndFileMetaData(savedFile,fileMetaDataMapper.toFileMetaDataDto(savedFileMetaData));
 
     }
+
+    @Override
+    public List<FileDto> fetchAllFiles() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated()){
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+
+        String username = authentication.getName();
+        User user = userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
+        List<File> files = fileRepository.getAllFilesFromUser(user);
+        return files.stream().map(
+                file -> fileMapper.fromFileAndFileMetaData(file, fileMetaDataMapper.toFileMetaDataDto(file.getFileMetaData()))
+        ).toList();
+    }
+
     private FileMetaDataDto extractFileMetaData(String fileName){
         HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
                 .bucket(awsConfigProperties.getBucketName())
