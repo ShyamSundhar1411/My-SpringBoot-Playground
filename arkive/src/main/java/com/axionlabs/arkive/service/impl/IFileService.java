@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -87,10 +88,13 @@ public class IFileService implements FileService {
                 .contentLength(file.getSize())
                 .build();
         amazonS3Client.putObject(request, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
-        String presignedUrl = iurlService.generatePreSignedAccessUrl(fileName, 60);
+        String url = amazonS3Client.utilities().getUrl(GetUrlRequest.builder()
+                        .bucket(awsConfigProperties.getBucketName())
+                        .key(fileName)
+                .build()).toString();
         FileDto fileDto = new FileDto();
         fileDto.setFileName(fileName);
-        fileDto.setFileUrl(presignedUrl);
+        fileDto.setFileUrl(url);
         File savedFile = fileMapper.toFileEntity(fileDto);
         savedFile.setUser(user);
         fileRepository.save(savedFile);
@@ -98,7 +102,9 @@ public class IFileService implements FileService {
         FileMetaData savedFileMetaData = fileMetaDataMapper.toFileMetaDataEntity(fileMetaDataDto);
         savedFileMetaData.setFile(savedFile);
         fileMetaDataRepository.save(savedFileMetaData);
-        return fileMapper.fromFileAndFileMetaData(savedFile,fileMetaDataMapper.toFileMetaDataDto(savedFileMetaData));
+        FileDto savedFileDto = fileMapper.fromFileAndFileMetaData(savedFile,fileMetaDataMapper.toFileMetaDataDto(savedFileMetaData));
+        savedFileDto.setFileUrl(iurlService.generatePreSignedAccessUrl(fileName,awsConfigProperties.getPreSignedExpiry()));
+        return savedFileDto;
 
     }
 
@@ -115,7 +121,11 @@ public class IFileService implements FileService {
         );
         List<File> files = fileRepository.getAllFilesFromUser(user);
         return files.stream().map(
-                file -> fileMapper.fromFileAndFileMetaData(file, fileMetaDataMapper.toFileMetaDataDto(file.getFileMetaData()))
+                file -> {
+                    FileDto fileDto = fileMapper.fromFileAndFileMetaData(file, fileMetaDataMapper.toFileMetaDataDto(file.getFileMetaData()));
+                    fileDto.setFileUrl(iurlService.generatePreSignedAccessUrl(file.getFileName(),awsConfigProperties.getPreSignedExpiry()));
+                    return fileDto;
+                }
         ).toList();
     }
 
