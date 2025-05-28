@@ -1,27 +1,59 @@
-# Arkive ☁️🗄️
+
+# ☁️🗄️ Arkive
 
 **Arkive** is a secure, Spring Boot-powered file storage system integrated with AWS S3. It allows users to upload, download, and manage files while securely storing metadata. With JWT authentication and scalable cloud storage, Arkive makes file management efficient and user-friendly.
 
-## Features
+---
+
+## 🚀 Features
 
 - 🗂️ Upload files to AWS S3
-- 📥 Download files from AWS S3
-- 🔒 Secure file access with JWT-based authentication
-- 🗑️ Delete files from storage
-- 📝 Manage file metadata (e.g., file name, size, type)
-- 🌐 RESTful API for file operations
+- 📥 Download and retrieve file metadata
+- 🗑️ Delete files securely
+- 🔒 JWT-based Authentication
+- 🌐 RESTful APIs with Swagger documentation
+- 📦 Clean Architecture using DTOs and Services
 
-## Technologies Used
+---
 
-- **Spring Boot** - Main framework for backend development
-- **AWS S3** - Cloud storage for file storage and retrieval
-- **JWT** - For secure user authentication and authorization
-- **Spring Security** - For role-based access control and secure file operations
-- **Maven** - Build and dependency management tool
-- **Springdoc OpenAPI** - API documentation and testing tool for RESTful APIs
+## 🛠️ Tech Stack
 
+- **Java 17**
+- **Spring Boot 3**
+- **Spring Security + JWT**
+- **AWS S3 SDK**
+- **Lombok**
+- **Jakarta Validation**
+- **Springdoc OpenAPI**
+- **Maven**
 
-## Springdoc OpenAPI Support
+---
 
-Springdoc OpenAPI is integrated into the project for easy interaction and testing of the APIs. Once the application is up and running, you can access the Swagger UI at the following URL:
+## 📚 API Endpoints
 
+| Method   | Endpoint                              | Description                                        |
+|----------|---------------------------------------|----------------------------------------------------|
+| `POST`   | `/api/v1/file/upload`                 | Upload a file to S3 and return file metadata       |
+| `GET`    | `/api/v1/file/files/`                 | Get all uploaded files for the authenticated user  |
+| `GET`    | `/api/v1/file/files/{fileId}`         | Get specific file metadata by file ID              |
+| `DELETE` | `/api/v1/file/files/{fileId}/delete/` | Delete a file by file ID                           |
+
+> All routes require a valid JWT Bearer token unless specified otherwise.
+
+---
+
+## 🧰 API Documentation
+
+Once the application is running locally, navigate to:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+Use the **Authorize** button to input your Bearer token before interacting with protected endpoints.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
