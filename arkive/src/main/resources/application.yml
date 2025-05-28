@@ -32,7 +32,7 @@ management:
       show-details: always
 
 springdoc:
-  show-actuator: true
+  show-actuator: false
   use-management-port: false
 aws:
   config:

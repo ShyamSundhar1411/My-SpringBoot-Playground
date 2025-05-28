@@ -1,5 +1,6 @@
 package com.axionlabs.arkive.controller;
 
+import com.axionlabs.arkive.dto.BaseResponseDto;
 import com.axionlabs.arkive.dto.ErrorResponseDto;
 import com.axionlabs.arkive.dto.file.FileDto;
 import com.axionlabs.arkive.dto.file.request.FileUploadRequestDto;
@@ -157,7 +158,50 @@ public class FileController {
                         )
                 );
     }
-
+    @DeleteMapping("/files/{fileId}/delete/")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "File deleted successfully.",
+                    content = @Content(schema = @Schema(implementation = BaseResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized. User is not authenticated.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "File deleted unsuccessfully",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    public ResponseEntity<BaseResponseDto> deleteFileById(@PathVariable UUID fileId){
+        boolean isDeleted = iFileService.deleteFileById(fileId);
+        if(isDeleted){
+            return ResponseEntity.status(
+                    HttpStatus.NO_CONTENT
+            ).body(
+                    new BaseResponseDto(
+                            HttpStatus.NO_CONTENT,
+                            "File Deleted Successfully"
+                    )
+            );
+        }
+        return ResponseEntity.status(
+                HttpStatus.BAD_REQUEST
+        ).body(
+                new BaseResponseDto(
+                        HttpStatus.NO_CONTENT,
+                        "File Deleted Unsuccessfully"
+                )
+        );
+    }
 
 
 }

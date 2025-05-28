@@ -15,4 +15,5 @@ public interface FileService {
     FileDto uploadFile(FileUploadRequestDto fileUploadRequestDto) throws IOException;
     List<FileDto> fetchAllFiles();
     FileDto fetchFileById(UUID fileId);
+    boolean deleteFileById(UUID fileId);
 }

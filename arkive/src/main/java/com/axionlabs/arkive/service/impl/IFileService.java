@@ -149,6 +149,23 @@ public class IFileService implements FileService {
 
     }
 
+    @Override
+    public boolean deleteFileById(UUID fileId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated()){
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+        String username = authentication.getName();
+        User user = userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
+        File file = fileRepository.getFileById(user,fileId).orElseThrow(
+                () -> new ResourceNotFoundException("File","fileId",fileId.toString())
+        );
+        fileRepository.delete(file);
+        return true;
+    }
+
     private FileMetaDataDto extractFileMetaData(String fileName){
         HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
                 .bucket(awsConfigProperties.getBucketName())
