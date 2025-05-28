@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/file")
@@ -114,6 +116,46 @@ public class FileController {
                         filesData
                 )
         );
+    }
+    @GetMapping(value = "/files/{fileId}")
+    @Operation(
+            summary = "Fetch File by id",
+            description = "Fetches file of the currently authenticated user by id",
+            security = { @SecurityRequirement(name="bearerAuth")}
+
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Files Fetched Successfully",
+                    content = @Content(schema = @Schema(implementation = FileResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized access (invalid credentials).",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Resource Not Found",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    public ResponseEntity<FileResponseDto> getFileById(@PathVariable UUID fileId){
+        FileDto fileDto = iFileService.fetchFileById(fileId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(
+                        new FileResponseDto(
+                                HttpStatus.OK,
+                                "File fetched successfully",
+                                fileDto
+                        )
+                );
     }
 
 

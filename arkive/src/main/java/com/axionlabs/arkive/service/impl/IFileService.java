@@ -9,6 +9,7 @@ import com.axionlabs.arkive.dto.file.request.FileUploadRequestDto;
 import com.axionlabs.arkive.entity.File;
 import com.axionlabs.arkive.entity.FileMetaData;
 import com.axionlabs.arkive.entity.User;
+import com.axionlabs.arkive.exception.ResourceNotFoundException;
 import com.axionlabs.arkive.mapper.FileMapper;
 import com.axionlabs.arkive.mapper.FileMetaDataMapper;
 import com.axionlabs.arkive.repository.FileMetaDataRepository;
@@ -129,6 +130,25 @@ public class IFileService implements FileService {
         ).toList();
     }
 
+    @Override
+    public FileDto fetchFileById(UUID fileId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated()){
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+        String username = authentication.getName();
+        User user = userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
+        File file = fileRepository.getFileById(user,fileId).orElseThrow(
+                () -> new ResourceNotFoundException("File","fileId",fileId.toString())
+        );
+        FileDto fileDto = fileMapper.fromFileAndFileMetaData(file, fileMetaDataMapper.toFileMetaDataDto(file.getFileMetaData()));
+        fileDto.setFileUrl(iurlService.generatePreSignedAccessUrl(fileDto.getFileName(),awsConfigProperties.getPreSignedExpiry()));
+        return fileDto;
+
+    }
+
     private FileMetaDataDto extractFileMetaData(String fileName){
         HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
                 .bucket(awsConfigProperties.getBucketName())
@@ -143,4 +163,5 @@ public class IFileService implements FileService {
         fileMetaDataDto.setSizeInBytes(headObjectResponse.contentLength());
         return fileMetaDataDto;
     }
+
 }
