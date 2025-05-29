@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: arkive
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: ${SPRING_JPA_SHOW_SQL}
+
+  security:
+    user:
+      name: ${SPRING_SECURITY_USER_NAME}
+      password: ${SPRING_SECURITY_USER_PASSWORD}
+  token:
+    access-secret-key: ${JWT_ACCESS_SECRET_KEY}
+    access-secret-key-expiration: ${JWT_ACCESS_SECRET_EXPIRATION}
+    refresh-secret-key: ${JWT_REFRESH_SECRET_KEY}
+    refresh-secret-key-expiration: ${JWT_REFRESH_SECRET_EXPIRATION}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  show-actuator: false
+  use-management-port: false
