@@ -16,6 +16,6 @@ public interface ToDoRepository extends JpaRepository<ToDo, UUID> {
     @Query("SELECT t from todo t where t.user = :user")
     List<ToDo> getAllToDosFromUser(@Param("user") User user);
     @Query("SELECT t from todo t where t.user = :user AND t.todoId = :todoId")
-    Optional<ToDo> getToDoById(@Param("user") User user);
+    Optional<ToDo> getToDoById(@Param("user") User user, @Param("todoId") UUID todoId);
 
 }

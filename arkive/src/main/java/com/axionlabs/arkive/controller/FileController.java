@@ -197,7 +197,7 @@ public class FileController {
                 HttpStatus.BAD_REQUEST
         ).body(
                 new BaseResponseDto(
-                        HttpStatus.NO_CONTENT,
+                        HttpStatus.BAD_REQUEST,
                         "File Deleted Unsuccessfully"
                 )
         );
