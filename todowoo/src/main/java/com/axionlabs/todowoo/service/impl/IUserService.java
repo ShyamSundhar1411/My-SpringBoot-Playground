@@ -45,7 +45,7 @@ public class IUserService implements UserService {
                 () -> new UsernameNotFoundException("User not found")
         );
     }
-    private Optional<User>  getAuthenticatedUser(){
+    public Optional<User>  getAuthenticatedUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null || !authentication.isAuthenticated()){
             throw new UsernameNotFoundException("User not authenticated");
