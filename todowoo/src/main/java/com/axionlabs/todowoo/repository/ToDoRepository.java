@@ -18,4 +18,14 @@ public interface ToDoRepository extends JpaRepository<ToDo, UUID> {
     @Query("SELECT t from todo t where t.user = :user AND t.todoId = :todoId")
     Optional<ToDo> getToDoById(@Param("user") User user, @Param("todoId") UUID todoId);
 
+    @Query("SELECT t FROM todo t WHERE t.user = :user AND " +
+            "((t.isCompleted = :completed) OR (LOWER(t.title) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +
+            "OR LOWER(t.memo) LIKE LOWER(CONCAT('%', :searchTerm, '%'))))")
+    List<ToDo> searchTodos(
+            @Param("user") User user,
+            @Param("searchTerm") String searchTerm,
+            @Param("completed") boolean completed);
+
+
+
 }

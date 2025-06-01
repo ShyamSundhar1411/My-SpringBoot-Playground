@@ -301,5 +301,48 @@ public class ToDoController {
         ToDoDto toDo = iToDoService.markAsIncomplete(toDoId);
         return ResponseEntity.ok(new ToDoResponseDto(HttpStatus.OK, "ToDo marked as incomplete", toDo));
     }
+    @Operation(
+            summary = "Search todos",
+            description = "Search todos by keyword for the currently authenticated user",
+            security = {@SecurityRequirement(name = "bearerAuth")}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ToDos fetched successfully based on search query",
+                    content = @Content(schema = @Schema(implementation = ListToDoResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid query parameter",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized access",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    @GetMapping("/search")
+    public ResponseEntity<ListToDoResponseDto> searchTodos(
+            @RequestParam(required = false,defaultValue = "") String searchTerm,
+            @RequestParam(required = false,defaultValue = "false") Boolean completed
+    ){
+        List<ToDoDto> todos = iToDoService.searchToDos(searchTerm,completed);
+        return ResponseEntity.status(
+                HttpStatus.OK
+        ).body(
+                new ListToDoResponseDto(
+                        HttpStatus.OK,
+                        "Todos retrieved successfully",
+                        todos
+                )
+        );
+    }
 
 }

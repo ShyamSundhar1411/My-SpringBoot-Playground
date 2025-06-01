@@ -15,4 +15,5 @@ public interface ToDoService {
     boolean deleteToDo(UUID todoId);
     ToDoDto markAsCompleted(UUID todoId);
     ToDoDto markAsIncomplete(UUID todoId);
+    List<ToDoDto> searchToDos(String searchTerm, boolean completed);
 }

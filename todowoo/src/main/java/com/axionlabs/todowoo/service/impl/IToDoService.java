@@ -120,5 +120,17 @@ public class IToDoService implements ToDoService {
 
     }
 
+    @Override
+    public List<ToDoDto> searchToDos(String searchTerm, boolean completed) {
+        User user = iUserService.getAuthenticatedUser().orElseThrow(
+                () -> new UsernameNotFoundException("User not authenticated")
+        );
+
+        return toDoRepository.searchTodos(user,searchTerm,completed)
+                .stream().map(toDoMapper::toToDoDto).toList();
+
+
+    }
+
 
 }
