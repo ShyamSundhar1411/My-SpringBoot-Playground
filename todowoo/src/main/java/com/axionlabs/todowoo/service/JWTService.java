@@ -1,7 +1,9 @@
 package com.axionlabs.todowoo.service;
 
 import com.axionlabs.todowoo.dto.token.TokenDto;
+import com.axionlabs.todowoo.dto.token.request.TokenRequestDto;
 import io.jsonwebtoken.Claims;
+import jakarta.validation.Valid;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,4 +17,6 @@ public interface JWTService {
     boolean isTokenValid(String token, UserDetails userDetails, boolean isAccess);
     String generateAccessToken(Map<String,Object> extraClaims, UserDetails userDetails);
     String generateRefreshToken(Map<String,Object> extraClaims, UserDetails userDetails);
+
+    TokenDto generateJwtTokenFromRefreshToken(@Valid TokenRequestDto tokenRequest);
 }

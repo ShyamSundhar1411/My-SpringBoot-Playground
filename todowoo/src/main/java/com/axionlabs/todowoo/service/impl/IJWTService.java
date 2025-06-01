@@ -2,6 +2,7 @@ package com.axionlabs.todowoo.service.impl;
 
 import com.axionlabs.todowoo.config.properties.JWTConfigProperties;
 import com.axionlabs.todowoo.dto.token.TokenDto;
+import com.axionlabs.todowoo.dto.token.request.TokenRequestDto;
 import com.axionlabs.todowoo.service.JWTService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -9,6 +10,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.security.PublicKey;
@@ -17,10 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-
+@Service
 public class IJWTService implements JWTService {
     @Autowired
     private JWTConfigProperties jwtConfigProperties;
+
+    @Autowired
+    private IUserService iUserService;
 
 
     @Override
@@ -75,6 +80,20 @@ public class IJWTService implements JWTService {
                 .expiration(new Date(System.currentTimeMillis()+jwtConfigProperties.getRefreshSecretKeyExpiration()))
                 .compact();
     }
+
+    @Override
+    public TokenDto generateJwtTokenFromRefreshToken(TokenRequestDto tokenRequest) {
+        String refreshToken = tokenRequest.getRefreshToken();
+        if(isTokenExpired(refreshToken,false)){
+            String username = extractUserName(refreshToken,false);
+            UserDetails userDetails = iUserService.loadUserByUsername(username);
+            if(isTokenValid(refreshToken,userDetails,false)){
+                return generateJwtToken(userDetails);
+            }
+        }
+        throw new RuntimeException("Invalid or expired refresh token");
+    }
+
     private boolean isTokenExpired(String token, boolean isAccess){
         return !extractExpiration(token, isAccess).before(new Date());
     }

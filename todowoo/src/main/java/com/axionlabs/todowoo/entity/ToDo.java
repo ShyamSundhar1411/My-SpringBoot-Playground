@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "todo")
 @Table(name = "todowoo_todo")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
 public class ToDo extends BaseEntity{
