@@ -1,5 +1,6 @@
 package com.axionlabs.todowoo.dto.user.request;
 
+import com.axionlabs.todowoo.utils.validators.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

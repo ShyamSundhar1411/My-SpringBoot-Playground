@@ -1,10 +1,9 @@
 package com.axionlabs.todowoo.dto.token;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class TokenDto {
     String accessToken;
     String refreshToken;
