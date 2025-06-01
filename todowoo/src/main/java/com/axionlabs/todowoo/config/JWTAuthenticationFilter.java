@@ -19,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.jar.JarException;
 
 @Component
 @RequiredArgsConstructor
@@ -43,11 +44,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwtToken;
         final String userName;
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
+        String[] headerParts = authHeader.split(" ");
+        if(headerParts.length < 2 || !headerParts[0].equalsIgnoreCase("Bearer")){
             filterChain.doFilter(request,response);
             return;
         }
-        jwtToken = authHeader.substring(7);
+        jwtToken = headerParts[1];
         try{
             userName = ijwtService.extractUserName(jwtToken,true);
             if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
@@ -65,7 +67,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request,response);
-        } catch (ServletException e){
+        } catch (ServletException | IllegalArgumentException | JarException e){
             String path = request.getRequestURI().substring(request.getContextPath().length());
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(
                     path,
