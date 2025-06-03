@@ -24,6 +24,14 @@ Each project is an independent server with unique functionality, ranging from si
    - A secure file storage system integrated with AWS S3 for file upload, download, and management.
    - Features include user authentication, file metadata management, and support for secure file operations (upload, download, and delete).
 ---
+### 5. **Meldora** 🎵🎬 (Project: [meldora](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/meldora))
+- A unified entertainment aggregator backend built with Spring Boot and GraphQL.
+- Integrates Spotify API for music data and TMDb (The Movie Database) API for movie data.
+- Provides a single GraphQL API to fetch, search, and combine music and movie information.
+- Supports user-specific favorites stored in a database to personalize content.
+- Demonstrates modern API design using GraphQL to seamlessly combine multiple data sources.
+
+---
 
 ## Technologies Used
 
@@ -32,14 +40,16 @@ Each project is an independent server with unique functionality, ranging from si
 - **Spring Security** (For secure authentication in relevant projects)
 - **H2 Database** (For local development and testing)
 - **JWT** (For token-based authentication in user authentication projects)
+- **GraphQL Java / Spring GraphQL** (For API layer in Meldora)
+- **REST clients** (WebClient/RestTemplate) for external API integration
 
 ---
 
 ## Features and Enhancements
 
-- All projects follow RESTful architecture and expose APIs for CRUD operations.
-- Some projects include features like JWT-based authentication, pagination, and filtering.
-- Aimed at demonstrating best practices for Spring Boot applications, including clean code, validation, and API design.
+- All projects follow RESTful architecture or GraphQL API design, exposing APIs for CRUD and complex queries.
+- Some projects include JWT-based authentication, pagination, filtering, and modular service layers.
+- Aimed at demonstrating best practices for Spring Boot applications, including clean code, validation, API design, and external API integration.
 
 ---
 
@@ -47,7 +57,7 @@ Each project is an independent server with unique functionality, ranging from si
 
 If you'd like to contribute, feel free to fork the repository, create a branch, and submit a pull request. All contributions are welcome, whether it's bug fixes, new features, or suggestions for improvement.
 
----
+
 
 ## License
 
