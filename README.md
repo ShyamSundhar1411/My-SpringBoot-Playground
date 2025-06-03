@@ -23,7 +23,7 @@ Each project is an independent server with unique functionality, ranging from si
 ### 4. **File Storage System with AWS** ☁️🗄️ (Project: [arkive](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/arkive))
    - A secure file storage system integrated with AWS S3 for file upload, download, and management.
    - Features include user authentication, file metadata management, and support for secure file operations (upload, download, and delete).
----
+
 ### 5. **Meldora** 🎵🎬 (Project: [meldora](https://github.com/ShyamSundhar1411/My-SpringBoot-Playground/tree/master/meldora))
 - A unified entertainment aggregator backend built with Spring Boot and GraphQL.
 - Integrates Spotify API for music data and TMDb (The Movie Database) API for movie data.
