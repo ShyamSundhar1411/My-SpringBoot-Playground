@@ -2,7 +2,7 @@ type Movie {
     id: ID!
     adult: Boolean
     backdropPath: String
-    genreIds: [Int]!
+    genreIds: [Int]
     genres: [Genre]
     originalLanguage: String
     overview: String

@@ -19,7 +19,7 @@ public class MovieController{
 
     @QueryMapping
     public List<MovieDto> movies(@Argument String query, @Argument String language, @Argument int page){
-        return IMovieService.getMovie(query,language,page);
+        return IMovieService.getMovies(query,language,page);
 
     }
 

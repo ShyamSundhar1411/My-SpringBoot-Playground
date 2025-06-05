@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,7 +28,7 @@ public class MovieServiceImpl implements MovieService {
 
 
     @Override
-    public List<MovieDto> getMovie(String query, String language, Integer page) {
+    public List<MovieDto> getMovies(String query, String language, Integer page) {
 
         String uri = String.format("/search/movie?query=%s&language=%s&page=%d", query, language, page);
         ListMovieResponseDto response = tmdbWebClient.get()
@@ -39,9 +39,15 @@ public class MovieServiceImpl implements MovieService {
         if (response == null || response.getResults() == null) {
             return Collections.emptyList();
         }
+        List<GenreDto> allGenres = IGenreService.getAllGenres();
+        Map<Integer, GenreDto> genreMap = allGenres.stream()
+                .collect(Collectors.toMap(GenreDto::getId, Function.identity()));
         return response.getResults().stream()
                 .peek(movieDto -> {
-                    List<GenreDto> genres = IGenreService.mapGenreIdsToGenres(movieDto.getGenreIds());
+                    List<GenreDto> genres = movieDto.getGenreIds().stream()
+                            .map(genreMap::get)
+                            .filter(Objects::nonNull)
+                            .toList();
                     movieDto.setGenres(genres);
                 })
                 .toList();
