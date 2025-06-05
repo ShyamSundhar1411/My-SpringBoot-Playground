@@ -1,5 +1,6 @@
 package com.axionlabs.meldora.service.impl;
 
+import com.axionlabs.meldora.dto.movie.GenreDto;
 import com.axionlabs.meldora.dto.movie.MovieDto;
 import com.axionlabs.meldora.dto.movie.response.ListMovieResponseDto;
 import com.axionlabs.meldora.service.MovieService;
@@ -22,6 +23,9 @@ public class MovieServiceImpl implements MovieService {
     @Qualifier("tmdbWebClient")
     private WebClient tmdbWebClient;
 
+    @Autowired
+    private GenreServiceImpl IGenreService;
+
 
     @Override
     public List<MovieDto> getMovie(String query, String language, Integer page) {
@@ -32,8 +36,15 @@ public class MovieServiceImpl implements MovieService {
                 .retrieve()
                 .bodyToMono(ListMovieResponseDto.class)
                 .block();
-
-        return response != null ? response.getResults() : Collections.emptyList();
+        if (response == null || response.getResults() == null) {
+            return Collections.emptyList();
+        }
+        return response.getResults().stream()
+                .peek(movieDto -> {
+                    List<GenreDto> genres = IGenreService.mapGenreIdsToGenres(movieDto.getGenreIds());
+                    movieDto.setGenres(genres);
+                })
+                .toList();
     }
 
     @Override

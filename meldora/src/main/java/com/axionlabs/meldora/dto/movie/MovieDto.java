@@ -12,6 +12,8 @@ public class MovieDto {
     @JsonProperty("backdrop_path")
     private String backdropPath;
     private Boolean adult;
+    @JsonProperty("genre_ids")
+    private List<Integer> genreIds;
     private List<GenreDto> genres;
     @JsonProperty("original_language")
     private String originalLanguage;
