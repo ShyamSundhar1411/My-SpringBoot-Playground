@@ -26,7 +26,9 @@ spring:
     access-secret-key-expiration: ${JWT_ACCESS_SECRET_EXPIRATION}
     refresh-secret-key: ${JWT_REFRESH_SECRET_KEY}
     refresh-secret-key-expiration: ${JWT_REFRESH_SECRET_EXPIRATION}
-
+  cache:
+    config:
+      cache-expiration: ${CACHE_EXPIRATION_IN_MINUTES}
 
 server:
   http2:
