@@ -22,6 +22,7 @@
         </processorPath>
         <module name="arkive" />
         <module name="todowoo" />
+        <module name="meldora" />
       </profile>
     </annotationProcessing>
   </component>
@@ -30,6 +31,7 @@
       <module name="accessa" options="-parameters" />
       <module name="arkive" options="-parameters" />
       <module name="bookwiz" options="-parameters" />
+      <module name="meldora" options="-parameters" />
       <module name="todowoo" options="-parameters" />
     </option>
   </component>
