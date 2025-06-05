@@ -1,3 +1,4 @@
 type Query{
     movies(query: String!,language: String="en-US",page: Int = 1): [Movie]
+    movie(movieId: Int!): Movie
 }

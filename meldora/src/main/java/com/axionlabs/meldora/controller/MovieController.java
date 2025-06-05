@@ -15,12 +15,16 @@ import java.util.List;
 @Controller
 public class MovieController{
     @Autowired
-    private MovieServiceImpl ImovieService;
+    private MovieServiceImpl IMovieService;
 
     @QueryMapping
     public List<MovieDto> movies(@Argument String query, @Argument String language, @Argument int page){
-        System.out.println("Hey");
-        return ImovieService.getMovie(query,language,page);
+        return IMovieService.getMovie(query,language,page);
 
+    }
+
+    @QueryMapping
+    public MovieDto movie(@Argument Integer movieId){
+        return IMovieService.getMovieById(movieId);
     }
 }

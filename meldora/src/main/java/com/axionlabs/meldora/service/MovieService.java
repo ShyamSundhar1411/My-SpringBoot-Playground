@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MovieService {
     List<MovieDto> getMovie(String query, String language, Integer page);
+    MovieDto getMovieById(Integer movieId);
 }

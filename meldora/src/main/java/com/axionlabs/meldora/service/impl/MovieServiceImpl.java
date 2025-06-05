@@ -27,8 +27,6 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDto> getMovie(String query, String language, Integer page) {
 
         String uri = String.format("/search/movie?query=%s&language=%s&page=%d", query, language, page);
-
-
         ListMovieResponseDto response = tmdbWebClient.get()
                 .uri(uri)
                 .retrieve()
@@ -36,6 +34,18 @@ public class MovieServiceImpl implements MovieService {
                 .block();
 
         return response != null ? response.getResults() : Collections.emptyList();
+    }
+
+    @Override
+    public MovieDto getMovieById(Integer movieId) {
+        String uri = String.format("/movie/%s",movieId.toString());
+        MovieDto response = tmdbWebClient.get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(MovieDto.class)
+                .block();
+        return response != null ? response : new MovieDto();
+
     }
 
 }
