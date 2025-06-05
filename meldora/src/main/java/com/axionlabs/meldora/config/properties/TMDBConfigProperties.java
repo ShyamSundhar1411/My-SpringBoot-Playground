@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter @Setter
 public class TMDBConfigProperties {
 
-    private String readAccessToken;
+    private String readAccessKey;
     private String apiKey;
     private String baseUrl;
 

@@ -1,0 +1,15 @@
+type Movie {
+    id: ID!
+    adult: Boolean
+    backdrop_path: String
+    genre_ids: [Genre]!
+    original_language: String
+    overview: String
+    popularity: Float
+    poster_path: String
+    release_date: String
+    title: String
+    video: Boolean
+    vote_average: Float
+    vote_count: Int
+}

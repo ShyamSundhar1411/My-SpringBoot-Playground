@@ -1,6 +1,11 @@
 spring:
   application:
     name: meldora
+  graphql:
+    graphiql:
+      enabled: true
+      schema:
+        locations: classpath:graphql/,classpath:tmdb/
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -36,6 +41,6 @@ tmdb:
 spotify:
   config:
     client-id: ${SPOTIFY_CLIENT_ID}
-    client-secret: ${SPOTIFY_CLIENT_SECRET
+    client-secret: ${SPOTIFY_CLIENT_SECRET}
     base-url: ${SPOTIFY_BASE_URL}
 
