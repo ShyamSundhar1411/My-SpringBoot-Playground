@@ -31,9 +31,11 @@ tmdb:
   config:
     read-access-key: ${TMDB_READ_ACCESS_KEY}
     api-key: ${TMDB_API_KEY}
+    base-url: ${TMDB_BASE_URL}
 
 spotify:
   config:
     client-id: ${SPOTIFY_CLIENT_ID}
-    client-secret: ${SPOTIFY_CLIENT_SECRET}
+    client-secret: ${SPOTIFY_CLIENT_SECRET
+    base-url: ${SPOTIFY_BASE_URL}
 

@@ -12,5 +12,6 @@ public class TMDBConfigProperties {
 
     private String readAccessToken;
     private String apiKey;
+    private String baseUrl;
 
 }
