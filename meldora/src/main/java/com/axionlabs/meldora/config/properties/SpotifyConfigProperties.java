@@ -12,4 +12,5 @@ public class SpotifyConfigProperties {
     private String clientId;
     private String clientSecret;
     private String baseUrl;
+    private String authUrl;
 }

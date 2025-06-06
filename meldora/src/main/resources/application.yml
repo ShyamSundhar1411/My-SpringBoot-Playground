@@ -45,4 +45,5 @@ spotify:
     client-id: ${SPOTIFY_CLIENT_ID}
     client-secret: ${SPOTIFY_CLIENT_SECRET}
     base-url: ${SPOTIFY_BASE_URL}
+    auth-url: ${SPOTIFY_AUTH_URL}
 

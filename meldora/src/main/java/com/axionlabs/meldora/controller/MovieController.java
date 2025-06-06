@@ -18,13 +18,13 @@ public class MovieController{
     private MovieServiceImpl IMovieService;
 
     @QueryMapping
-    public List<MovieDto> movies(@Argument String query, @Argument String language, @Argument int page){
+    public List<MovieDto> fetchMovies(@Argument String query, @Argument String language, @Argument int page){
         return IMovieService.getMovies(query,language,page);
 
     }
 
     @QueryMapping
-    public MovieDto movie(@Argument Integer movieId){
+    public MovieDto fetchMovieById(@Argument Integer movieId){
         return IMovieService.getMovieById(movieId);
     }
 }

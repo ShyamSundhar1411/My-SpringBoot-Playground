@@ -1,4 +1,4 @@
-// Artist.java
+// ArtistDto.java
 
 // YApi QuickType插件生成，具体参考文档:https://plugins.jetbrains.com/plugin/18847-yapi-quicktype/documentation
 
@@ -7,15 +7,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 @Data
 @Getter @Setter
-public class Artist {
+public class ArtistDto {
     private String name;
     private String href;
     private String id;
     private String type;
-    private ExternalUrls externalUrls;
+    private ExternalUrlsDto externalUrls;
     private String uri;
 
 

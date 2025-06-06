@@ -2,13 +2,10 @@
 
 package com.axionlabs.meldora.dto.music;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.List;
 
 @Data
-@Getter @Setter
-public class ExternalUrls {
-    private String spotify;
+public class ExternalIdsDto {
+    private String ean;
+    private String upc;
+    private String isrc;
 }

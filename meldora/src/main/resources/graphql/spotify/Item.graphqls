@@ -1,11 +1,8 @@
-enum ItemType{
-    TRACK
-}
 type Item{
     discNumber: Int
     album: Album
     availableMarkets: [String]
-    type: ItemType
+    type: String
     externalIds: ExternalIds
     uri: String
     durationMs: Int

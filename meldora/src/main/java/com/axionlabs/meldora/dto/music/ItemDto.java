@@ -5,22 +5,22 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-class Item {
+class ItemDto {
     private long discNumber;
-    private Album album;
+    private AlbumDto album;
     private List<String> availableMarkets;
-    private ItemType type;
-    private ExternalIds externalIds;
+    private String type;
+    private ExternalIdsDto externalIds;
     private String uri;
     private long durationMs;
     private boolean explicit;
     private boolean isPlayable;
-    private List<Artist> artists;
+    private List<ArtistDto> artists;
     private long popularity;
     private String name;
     private long trackNumber;
     private String href;
     private String id;
     private boolean isLocal;
-    private ExternalUrls externalUrls;
+    private ExternalUrlsDto externalUrls;
 }

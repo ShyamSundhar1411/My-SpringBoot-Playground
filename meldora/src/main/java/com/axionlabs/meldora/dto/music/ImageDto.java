@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Data
 @Getter @Setter
-public class Image {
+public class ImageDto {
     private long width;
     private String url;
     private long height;
