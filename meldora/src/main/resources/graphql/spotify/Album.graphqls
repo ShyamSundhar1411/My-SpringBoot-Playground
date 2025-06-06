@@ -1,0 +1,15 @@
+type Album{
+    images: [Image]
+    availableMarkets: [String]
+    releaseDatePrecision: String
+    type: String
+    uri: String
+    totalTracks: Int
+    isPlayable: Boolean
+    artists: [Artist]
+    releaseDate: String
+    name: String
+    albumType: String
+    href: String
+    externalUrls: ExternalUrls
+}

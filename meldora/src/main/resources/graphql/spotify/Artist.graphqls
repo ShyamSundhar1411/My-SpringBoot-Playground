@@ -1,0 +1,8 @@
+type Artist{
+    name: String
+    href: String
+    id: String
+    type: String
+    externalUrls: ExternalUrls
+    uri: String
+}

@@ -1,4 +1,5 @@
 type Query{
     movies(query: String!,language: String="en-US",page: Int = 1): [Movie]
     movie(movieId: Int!): Movie
+    tracks(q: String!,market: String="ES",limit: Int = 5,offset: Int = 5): Track
 }

@@ -1,0 +1,23 @@
+enum ItemType{
+    TRACK
+}
+type Item{
+    discNumber: Int
+    album: Album
+    availableMarkets: [String]
+    type: ItemType
+    externalIds: ExternalIds
+    uri: String
+    durationMs: Int
+    explicit: Boolean
+    isPlayable: Boolean
+    artists: [Artist]
+    popularity: Int
+    name: String
+    trackNumber: Int
+    href: String
+    id: String
+    isLocal: Boolean
+    externalUrls: ExternalUrls
+
+}

@@ -1,0 +1,8 @@
+type Track{
+    next: String
+    total: Int
+    offset: Int
+    limit: Int
+    href: String
+    items: [Item]
+}

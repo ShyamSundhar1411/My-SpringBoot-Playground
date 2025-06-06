@@ -10,9 +10,9 @@ class Item {
     private Album album;
     private List<String> availableMarkets;
     private ItemType type;
-    private ExternalIds externalids;
+    private ExternalIds externalIds;
     private String uri;
-    private long durationms;
+    private long durationMs;
     private boolean explicit;
     private boolean isPlayable;
     private List<Artist> artists;
