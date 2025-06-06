@@ -1,6 +1,8 @@
 spring:
   application:
     name: meldora
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   graphql:
     graphiql:
       enabled: true

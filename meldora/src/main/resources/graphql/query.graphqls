@@ -1,5 +1,7 @@
 type Query{
     fetchMovies(query: String!,language: String="en-US",page: Int = 1): [Movie]
     fetchMovieById(movieId: Int!): Movie
-    fetchTracks(q: String!): Track
+    fetchTracks(q: String!): Tracks
+    fetchTrackById(trackId: String! ): Item
+
 }

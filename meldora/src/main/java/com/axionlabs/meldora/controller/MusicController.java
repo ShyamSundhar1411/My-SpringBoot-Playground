@@ -1,5 +1,6 @@
 package com.axionlabs.meldora.controller;
 
+import com.axionlabs.meldora.dto.music.ItemDto;
 import com.axionlabs.meldora.dto.music.TrackDto;
 import com.axionlabs.meldora.service.impl.MusicServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -16,5 +17,10 @@ public class MusicController {
     @QueryMapping
     public TrackDto fetchTracks(@Argument String q){
         return IMusicService.getTracks(q);
+    }
+
+    @QueryMapping
+    public ItemDto fetchTrackById(@Argument String trackId){
+        return IMusicService.getTrackById(trackId);
     }
 }

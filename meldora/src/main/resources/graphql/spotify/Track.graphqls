@@ -1,4 +1,4 @@
-type Track{
+type Tracks{
     next: String
     total: Int
     offset: Int
