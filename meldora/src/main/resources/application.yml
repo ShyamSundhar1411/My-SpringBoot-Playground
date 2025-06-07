@@ -7,7 +7,7 @@ spring:
     graphiql:
       enabled: true
       schema:
-        locations: classpath:graphql/,classpath:tmdb/
+        locations: classpath:graphql/,classpath:tmdb/,classpath:spotify/
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
