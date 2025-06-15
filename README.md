@@ -40,7 +40,7 @@ Each project is an independent server with unique functionality, ranging from si
 - **Spring Security** (For secure authentication in relevant projects)
 - **H2 Database** (For local development and testing)
 - **JWT** (For token-based authentication in user authentication projects)
-- **GraphQL Java / Spring GraphQL** (For API layer in Meldora)
+- **GraphQL Java / Spring GraphQL** (For API layerS)
 - **REST clients** (WebClient/RestTemplate) for external API integration
 
 ---
